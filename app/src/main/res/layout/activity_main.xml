@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.ivos.quiz_app.MainActivity"
+    tools:layout_editor_absoluteY="81dp"
+    tools:layout_editor_absoluteX="0dp">
+
+
+        <EditText
+            android:id="@+id/textView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Your_name_here"
+            android:layout_marginRight="24dp"
+            android:layout_marginLeft="24dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="32dp"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintRight_toLeftOf="@+id/language_switcher"
+            android:layout_marginStart="24dp"
+            android:layout_marginEnd="24dp" />
+
+        <TextView
+            android:id="@+id/cz_en"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="7dp"
+            android:text="@string/cz_en"
+            app:layout_constraintBottom_toTopOf="@+id/language_switcher"
+            app:layout_constraintRight_toRightOf="@+id/language_switcher" />
+
+        <Switch
+            android:id="@+id/language_switcher"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_marginEnd="24dp"
+            android:layout_marginRight="24dp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintBottom_toBottomOf="@+id/textView"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/textView"
+            app:layout_constraintVertical_bias="0.0" />
+
+        <TextView
+            android:id="@+id/image_question_textbuton"
+            style="@style/CategoryStyle"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="24dp"
+            android:layout_marginRight="24dp"
+            android:layout_marginTop="24dp"
+            android:background="@color/category_images"
+            android:text="@string/Image_questions"
+            android:textColor="@color/MainButtonsText"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView"
+            app:layout_constraintHorizontal_bias="0.0"
+            android:layout_width="0dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginEnd="24dp" />
+
+        <TextView
+            android:id="@+id/text_question_textbuton"
+            style="@style/CategoryStyle"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="24dp"
+            android:layout_marginRight="24dp"
+            android:layout_marginTop="24dp"
+            android:background="@color/category_sounds"
+            android:text="@string/Text_questions"
+            android:textColor="@color/MainButtonsText"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/image_question_textbuton"
+            android:layout_width="0dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginEnd="24dp" />
+
+        <TextView
+            android:id="@+id/sound_question_textbuton"
+            style="@style/CategoryStyle"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="24dp"
+            android:layout_marginRight="24dp"
+            android:background="@color/category_texts"
+            android:text="@string/Sound_questions"
+            android:textColor="@color/MainButtonsText"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            android:layout_marginTop="24dp"
+            app:layout_constraintTop_toBottomOf="@+id/text_question_textbuton"
+            android:layout_width="0dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginEnd="24dp" />
+
+        <TextView
+            android:id="@+id/global_score"
+            style="@style/CategoryStyle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="24dp"
+            android:layout_marginLeft="24dp"
+            android:layout_marginRight="24dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="24dp"
+            android:background="@color/category_family"
+            android:text="@string/Total_score"
+            android:textColor="@color/MainButtonsText"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/sound_question_textbuton" />
+
+        <TextView
+            android:id="@+id/image_score_counter"
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:gravity="center_horizontal"
+            android:text="0"
+            android:textColor="@color/MainButtonsText"
+            app:layout_constraintBottom_toBottomOf="@+id/image_question_textbuton"
+            android:layout_marginBottom="8dp"
+            app:layout_constraintTop_toTopOf="@+id/image_question_textbuton"
+            app:layout_constraintVertical_bias="0.5"
+            android:layout_marginRight="8dp"
+            app:layout_constraintRight_toRightOf="@+id/image_question_textbuton"
+            android:layout_marginEnd="8dp" />
+
+        <TextView
+            android:id="@+id/image_score_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_marginTop="8dp"
+            android:gravity="center_horizontal"
+            android:text="Score"
+            android:textColor="@color/MainButtonsText"
+            app:layout_constraintBottom_toTopOf="@+id/image_score_counter"
+            app:layout_constraintHorizontal_bias="0.465"
+            app:layout_constraintLeft_toLeftOf="@+id/image_score_counter"
+            app:layout_constraintRight_toRightOf="@+id/image_score_counter"
+            app:layout_constraintTop_toTopOf="@+id/image_question_textbuton"
+            app:layout_constraintVertical_bias="0.5" />
+
+        <TextView
+            android:id="@+id/text_score_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_marginTop="8dp"
+            android:gravity="center_horizontal"
+            android:text="Score"
+            android:textColor="@color/MainButtonsText"
+            app:layout_constraintBottom_toTopOf="@+id/text_score_counter"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintLeft_toLeftOf="@+id/text_score_counter"
+            app:layout_constraintRight_toRightOf="@+id/text_score_counter"
+            app:layout_constraintTop_toTopOf="@+id/text_question_textbuton" />
+
+        <TextView
+            android:id="@+id/text_score_counter"
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:gravity="center_horizontal"
+            android:text="0"
+            android:textColor="@color/MainButtonsText"
+            app:layout_constraintBottom_toBottomOf="@+id/text_question_textbuton"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintLeft_toLeftOf="@+id/text_question_textbuton"
+            app:layout_constraintRight_toRightOf="@+id/text_question_textbuton"
+            app:layout_constraintTop_toTopOf="@+id/text_question_textbuton"
+            app:layout_constraintVertical_bias="0.5" />
+
+        <TextView
+            android:id="@+id/sound_score_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_marginTop="8dp"
+            android:gravity="center_horizontal"
+            android:text="Score"
+            android:textColor="@color/MainButtonsText"
+            app:layout_constraintBottom_toTopOf="@+id/sound_score_counter"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintLeft_toLeftOf="@+id/sound_score_counter"
+            app:layout_constraintRight_toRightOf="@+id/sound_score_counter"
+            app:layout_constraintTop_toTopOf="@+id/sound_question_textbuton" />
+
+        <TextView
+            android:id="@+id/sound_score_counter"
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginTop="8dp"
+            android:gravity="center_horizontal"
+            android:text="0"
+            android:textColor="@color/MainButtonsText"
+            app:layout_constraintBottom_toBottomOf="@+id/sound_question_textbuton"
+            app:layout_constraintRight_toRightOf="@+id/sound_question_textbuton"
+            app:layout_constraintTop_toTopOf="@+id/sound_question_textbuton"
+            app:layout_constraintVertical_bias="0.509" />
+
+        <TextView
+            android:id="@+id/total_score_counter"
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginTop="8dp"
+            android:gravity="center_horizontal"
+            android:text="0"
+            android:textColor="@color/MainButtonsText"
+            app:layout_constraintBottom_toBottomOf="@+id/global_score"
+            app:layout_constraintRight_toRightOf="@+id/global_score"
+            app:layout_constraintTop_toTopOf="@+id/global_score" />
+
+
+</android.support.constraint.ConstraintLayout>

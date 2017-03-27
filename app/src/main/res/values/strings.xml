@@ -1,0 +1,20 @@
+<resources>
+    <!-- Title for the application.  -->
+    <string name="app_name">Czech Republic Quiz</string>
+
+    <!-- Category name for image question quiz [CHAR LIMIT=20] -->
+    <string name="Image_questions">Image questions</string>
+
+    <!-- Category name for text question quiz [CHAR LIMIT=20] -->
+    <string name="Text_questions">Text questions</string>
+
+    <!-- Category name for text question quiz [CHAR LIMIT=20] -->
+    <string name="Sound_questions">Sound questions</string>
+
+    <!-- Category name for the vocabulary questions for family members [CHAR LIMIT=20] -->
+    <string name="Total_score">Total score:</string>
+
+    <!-- Category name for the vocabulary questions for family members [CHAR LIMIT=20] -->
+    <string name="cz_en">CZ EN</string>
+    <string name="nothing">Nothing</string>
+</resources>
