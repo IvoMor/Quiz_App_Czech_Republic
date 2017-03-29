@@ -2,31 +2,31 @@
 
 <resources>
     <!-- Primary color of the app (shown in the app bar) -->
-    <color name="primary_color">#ff0000</color>
+    <color name="primary_color">#6e6e6e</color>
 
     <!-- Primary dark color of the app (shown in the status bar) -->
     <color name="primary_dark_color">#000000</color>
 
-    <color name="colorAccent">#000000</color>
+    <color name="colorAccent">#c0c0c0</color>
 
     <!-- Background color for app -->
-    <color name="tan_background">#FFF7DA</color>
+    <color name="tan_background">#c0c0c0</color>
 
     <!-- Background color for the numbers category -->
-    <color name="category_images">#0000ff</color>
+    <color name="category_images">#c0c0c0</color>
 
     <!-- Background color for the family members category -->
-    <color name="category_family">#0000ff</color>
+    <color name="category_family">#c0c0c0</color>
 
     <!-- Background color for the colors category -->
-    <color name="category_sounds">#0000ff</color>
+    <color name="category_sounds">#c0c0c0</color>
 
     <!-- Background color for the phrases category -->
-    <color name="category_texts">#0000ff</color>
+    <color name="category_texts">#c0c0c0</color>
 
     <!-- Question text color -->
-    <color name="question_texts">#c0c0c0</color>
+    <color name="question_texts">#404040</color>
 
-    <!-- MainActivitz buttons text -->
-    <color name="MainButtonsText">#c7c7c7</color>
+    <!-- MainActivity buttons text -->
+    <color name="MainButtonsText">#404040</color>
 </resources>

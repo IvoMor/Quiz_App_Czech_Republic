@@ -1,4 +1,3 @@
-
 package com.example.ivos.quiz_app;
 
 import android.content.Context;
@@ -45,17 +44,25 @@ public class QuestionAdapter extends ArrayAdapter<Question> {
         // Get the {@link Question} object located at this position in the list
         Question currentQuestion = getItem(position);
 
-        // Find the TextView in the list_item.xml layout with the ID miwok_text_view.
+        // Find the TextView in the list_item.xml layout with the ID question_textview.
         TextView questionTextView = (TextView) listItemView.findViewById(R.id.question_textview);
-        // Get the Miwok translation from the currentQuestion object and set this text on
-        // the Miwok TextView.
+        // Set the text for question
         questionTextView.setText(currentQuestion.getQuestionText());
 
-        // Find the RadioButton in the list_item.xml layout with the ID default_text_view.
+        // Find the RadioButton in the list_item.xml layout with the ID radio_button_answer_a.
         RadioButton answerAtextView = (RadioButton) listItemView.findViewById(R.id.radio_button_answer_a);
-        // Get the default translation from the currentQuestion object and set this text on
-        // the default TextView.
-        answerAtextView.setText(currentQuestion.getAnswerRightText());
+        // Set the text for answer A
+        answerAtextView.setText(currentQuestion.getAnswerText1());
+
+        // Find the RadioButton in the list_item.xml layout with the ID radio_button_answer_a.
+        RadioButton answerBtextView = (RadioButton) listItemView.findViewById(R.id.radio_button_answer_b);
+        // Set the text for answer B
+        answerBtextView.setText(currentQuestion.getAnswerText1());
+
+        // Find the RadioButton in the list_item.xml layout with the ID radio_button_answer_a.
+        RadioButton answerCtextView = (RadioButton) listItemView.findViewById(R.id.radio_button_answer_c);
+        // Set the text for answer C
+        answerCtextView.setText(currentQuestion.getAnswerText1());
 
         // Find the ImageView in the list_item.xml layout with the ID image.
         ImageView imageView = (ImageView) listItemView.findViewById(R.id.image);
@@ -81,4 +88,6 @@ public class QuestionAdapter extends ArrayAdapter<Question> {
         // the ListView.
         return listItemView;
     }
+
+
 }

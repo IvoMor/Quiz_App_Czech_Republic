@@ -12,14 +12,16 @@ public class Question {
     /** Question text */
     private String qQuestionText;
 
-    /** Right answer*/
-    private String qAnswerRightText;
+    /** 1. answer*/
+    private String qAnswerText1;
 
-    /** First wrong answer*/
-    private String qAnswerWrong1Text;
+    /** 2. answer*/
+    private String qAnswerText2;
 
-    /** Second wrong answer*/
-    private String qAnswerWrong2Text;
+    /** 3. answer*/
+    private String qAnswerText3;
+
+    private int qRightAnswerPosition;
 
     /** Audio resource ID for the word */
     private int qAudioResourceId = NO_AUDIO_PROVIDED;
@@ -37,32 +39,34 @@ public class Question {
      * Create a new Question object - text type.
      *
      * @param questionText is recent question
-     * @param answerRightText is right answer for qQuestionText
-     * @param answerWrong1Text is wrong answer for qQuestionText
-     * @param answerWrong2Text is wrong answer for qQuestionText
+     * @param answerText1 is 1. answer for qQuestionText
+     * @param answerText2 is 2. answer for qQuestionText
+     * @param answerText3 is 3. answer for qQuestionText
+     * @param rightAnswerPosition says witch i true one
      */
-    public Question(String questionText, String answerRightText, String answerWrong1Text, String answerWrong2Text ) {
+    public Question(String questionText, String answerText1, String answerText2, String answerText3, int rightAnswerPosition ) {
         qQuestionText = questionText;
-        qAnswerRightText = answerRightText;
-        qAnswerWrong1Text = answerWrong1Text;
-        qAnswerWrong2Text = answerWrong2Text;
+        qAnswerText1 = answerText1;
+        qAnswerText2 = answerText2;
+        qAnswerText3 = answerText3;
+        qRightAnswerPosition = rightAnswerPosition;
     }
 
     /**
      * Create a new Question object - image or sound type.
      *
      * @param questionText is recent question
-     * @param answerRightText is right answer for qQuestionText
-     * @param answerWrong1Text is wrong answer for qQuestionText
-     * @param answerWrong2Text is wrong answer for qQuestionText
+     * @param answerText1 is 1. answer for qQuestionText
+     * @param answerText2 is 2. answer for qQuestionText
+     * @param answerText3 is 3. answer for qQuestionText
      * @param imageOrAudioResourceId id for image or sound
      * @param isImageId for image = true and for audio = false
      */
-    public Question(String questionText, String answerRightText, String answerWrong1Text, String answerWrong2Text, int imageOrAudioResourceId, boolean isImageId ) {
+    public Question(String questionText, String answerText1, String answerText2, String answerText3, int imageOrAudioResourceId, boolean isImageId, int rightAnswerPosition ) {
         qQuestionText = questionText;
-        qAnswerRightText = answerRightText;
-        qAnswerWrong1Text = answerWrong1Text;
-        qAnswerWrong2Text = answerWrong2Text;
+        qAnswerText1 = answerText1;
+        qAnswerText2 = answerText2;
+        qAnswerText3 = answerText3;
         if (isImageId) qImageResourceId = imageOrAudioResourceId;
         else qAudioResourceId = imageOrAudioResourceId;
     }
@@ -74,23 +78,29 @@ public class Question {
         return qQuestionText;
     }
     /**
-     * Get the right answer of the question instance.
+     * Get the 1. answer of the question instance.
      */
-    public String getAnswerRightText() {
-        return qAnswerRightText;
+    public String getAnswerText1() {
+        return qAnswerText1;
     }
 
     /**
-     * Get the first wrong answer of the question instance.
+     * Get the 2. answer of the question instance.
      */
-    public String getAnswerWrong1Text() {
-        return qAnswerWrong1Text;
+    public String getAnswerText2() {
+        return qAnswerText2;
     }
     /**
-     * Get the second wrong answer of the question instance.
+     * Get the 3. answer of the question instance.
      */
-    public String getAnswerWrong2Text() {
-        return qAnswerWrong2Text;
+    public String getAnswerText3() {
+        return qAnswerText3;
+    }
+    /**
+     * Get the position of wright answer of the question instance.
+     */
+    public int getqRightAnswerPosition() {
+        return qRightAnswerPosition;
     }
 
     /**
@@ -120,4 +130,6 @@ public class Question {
     public boolean hasAudio() {
         return qAudioResourceId != NO_IMAGE_PROVIDED;
     }
+
+
 }

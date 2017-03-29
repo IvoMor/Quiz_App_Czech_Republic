@@ -6,12 +6,15 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.RadioButton;
 
 import java.util.ArrayList;
 
 public class TextsActivity extends AppCompatActivity {
 
-    /** Handles playback of all the sound files */
+    /**
+     * Handles playback of all the sound files
+     */
     private MediaPlayer mMediaPlayer;
 
     @Override
@@ -22,13 +25,13 @@ public class TextsActivity extends AppCompatActivity {
         // Create a list of questions
         final ArrayList<Question> questions = new ArrayList<Question>();
         questions.add(new Question("What is the city with second largest population in Czech Republic?",
-                                    "Brno", "Plzeň (Pilsen)","Praha"));
+                "Brno", "Plzeň (Pilsen)", "Praha", 1));
         questions.add(new Question("Who was Czech Republic’s first president?",
-                                    "Alexander Dubceck", "Vaclav Havel","Ludvik Svoboda"));
+                "Alexander Dubceck", "Vaclav Havel", "Ludvik Svoboda", 2));
         questions.add(new Question("Which country is to the west of Czech Republic?",
-                                    "Italy", "Germany","France"));
+                "Italy", "Germany", "France", 2));
         questions.add(new Question("How tall is Sněžka, the highest peak in the Czech Republic?",
-                                    "1402 m a.s.l.", "1502 m a.s.l.","1602 m a.s.l."));
+                "1402 m a.s.l.", "1502 m a.s.l.", "1602 m a.s.l.", 3));
 
 
         // Create an {@link QuestionAdapter}, whose data source is a list of {@link Question}s. The
@@ -50,6 +53,38 @@ public class TextsActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
                 // Get the {@link Question} object at the given position the user clicked on
                 Question question = questions.get(position);
+
+                RadioButton radioButtonA = (RadioButton) view.findViewById(R.id.radio_button_answer_a);
+                RadioButton radioButtonB = (RadioButton) view.findViewById(R.id.radio_button_answer_b);
+                RadioButton radioButtonC = (RadioButton) view.findViewById(R.id.radio_button_answer_c);
+
+//                switch(question.getqRightAnswerPosition()) {
+//                    case 1 :
+//                        if (radioButtonA.isChecked()) {
+//                            trueAnswer;                                     //TODO
+//                        } else {
+//                            falseAnswer;
+//                        }
+//                        freezCurrentItem;
+//                        break;
+//                    case 2 :
+//                        if (radioButtonB.isChecked()) {
+//                            trueAnswer;                                     //TODO
+//                        } else {
+//                            falseAnswer;
+//                        }
+//                        freezCurrentItem;
+//                        break;
+//                    case 3 :
+//                        if (radioButtonB.isChecked()) {
+//                            trueAnswer;                                     //TODO
+//                        } else {
+//                            falseAnswer;
+//                        }
+//                        freezCurrentItem;
+//                        break;
+//
+//                }
 
                 // Create and setup the {@link MediaPlayer} for the audio resource associated
                 // with the current question
