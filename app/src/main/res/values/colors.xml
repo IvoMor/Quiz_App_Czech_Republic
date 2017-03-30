@@ -29,4 +29,10 @@
 
     <!-- MainActivity buttons text -->
     <color name="MainButtonsText">#404040</color>
+
+    <!-- True answer text after checked -->
+    <color name="trueAnswer">#00c000</color>
+
+    <!-- False answer text after checked -->
+    <color name="falseAnswer">#c00000</color>
 </resources>

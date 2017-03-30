@@ -3,9 +3,13 @@ package com.example.ivos.quiz_app;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -46,51 +50,54 @@ public class TextsActivity extends AppCompatActivity {
         // {@link ListView} will display list items for each {@link Question} in the list.
         listView.setAdapter(adapter);
 
+
+
         // Set a click listener to play the audio when the list item is clicked on
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+           // public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
                 // Get the {@link Question} object at the given position the user clicked on
                 Question question = questions.get(position);
 
-//                RadioButton radioButtonA = (RadioButton) view.findViewById(R.id.radio_button_answer_a);
-//                RadioButton radioButtonB = (RadioButton) view.findViewById(R.id.radio_button_answer_b);
-//                RadioButton radioButtonC = (RadioButton) view.findViewById(R.id.radio_button_answer_c);
+                // debugging tools
+                Toast.makeText( TextsActivity.this, "Click", Toast.LENGTH_LONG  ).show();
+                Log.v("TextActivity", "Click");
 
-//                switch(question.getqRightAnswerPosition()) {
-//                    case 1 :
-//                        if (radioButtonA.isChecked()) {
-//                            trueAnswer;                                     //TODO
-//                        } else {
-//                            falseAnswer;
-//                        }
-//                        freezCurrentItem;
-//                        break;
-//                    case 2 :
-//                        if (radioButtonB.isChecked()) {
-//                            trueAnswer;                                     //TODO
-//                        } else {
-//                            falseAnswer;
-//                        }
-//                        freezCurrentItem;
-//                        break;
-//                    case 3 :
-//                        if (radioButtonB.isChecked()) {
-//                            trueAnswer;                                     //TODO
-//                        } else {
-//                            falseAnswer;
-//                        }
-//                        freezCurrentItem;
-//                        break;
-//
-//                }
+                // get the radioGroup
+                RadioGroup answerRadioGroup =(RadioGroup) view.findViewById(R.id.answer_radio_group);
+                // save id of checked button
+                int checkButtonID = answerRadioGroup.getCheckedRadioButtonId();
+
+                RadioButton checkButton = (RadioButton) view.findViewById(checkButtonID);
+
+                int checkButtonPosition = 0;
+                // which is checked 1 or 2 or 3
+                switch (checkButtonID) {
+                    case R.id.radio_button_answer_a : checkButtonPosition = 1;
+                        break;
+                    case R.id.radio_button_answer_b : checkButtonPosition = 2;
+                        break;
+                    case R.id.radio_button_answer_c : checkButtonPosition = 3;
+                        break;
+                }
+
+                //debug helping
+                //radioButtonA.setTextColor(getResources().getColor(R.color.trueAnswer));
+
+                //if it is the right answer then colored text to green else to red
+                if (checkButtonPosition == question.getqRightAnswerPosition()) {
+                    checkButton.setTextColor(getResources().getColor(R.color.trueAnswer));
+                }  else {
+                    checkButton.setTextColor(getResources().getColor(R.color.falseAnswer));
+                }
 
                 // Create and setup the {@link MediaPlayer} for the audio resource associated
                 // with the current question
-//                mMediaPlayer = MediaPlayer.create(TextsActivity.this, question.getAudioResourceId());
+               // mMediaPlayer = MediaPlayer.create(TextsActivity.this, question.getAudioResourceId());
 
                 // Start the audio file
-//                mMediaPlayer.start();
+                //mMediaPlayer.start();
             }
         });
     }
