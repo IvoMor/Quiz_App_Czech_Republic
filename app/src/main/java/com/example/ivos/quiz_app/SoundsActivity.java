@@ -21,11 +21,14 @@ public class SoundsActivity extends AppCompatActivity {
 
         // Create a list of questions
         final ArrayList<Question> questions = new ArrayList<Question>();
-//        questions.add(new Question("red", "weṭeṭṭi", R.drawable.color_red, R.raw.color_red));
-//        questions.add(new Question("mustard yellow", "chiwiiṭә", R.drawable.color_mustard_yellow,
-//                R.raw.color_mustard_yellow));
-//        questions.add(new Question("dusty yellow", "ṭopiisә", R.drawable.color_dusty_yellow,
-//                R.raw.color_dusty_yellow));
+        questions.add(new Question("What is the city with second largest population in Czech Republic?",
+                "Brno", "Plzeň (Pilsen)", "Praha", R.raw.family_grandfather, false, 1));
+        questions.add(new Question("Who was Czech Republic’s first president?",
+                "Alexander Dubceck", "Vaclav Havel", "Ludvik Svoboda", R.raw.family_grandfather, false,  2));
+        questions.add(new Question("Which country is to the west of Czech Republic?",
+                "Italy", "Germany", "France", R.raw.family_grandfather, false,  2));
+        questions.add(new Question("How tall is Sněžka, the highest peak in the Czech Republic?",
+                "1402 m a.s.l.", "1502 m a.s.l.", "1602 m a.s.l.", R.raw.family_grandfather, false,  3));
 
         // Create an {@link QuestionAdapter}, whose data source is a list of {@link Question}s. The
         // adapter knows how to create list items for each item in the list.
@@ -41,7 +44,7 @@ public class SoundsActivity extends AppCompatActivity {
         listView.setAdapter(adapter);
 
         // Set a click listener to play the audio when the list item is clicked on
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {                         //TODO doesn't work
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
                 // Get the {@link Question} object at the given position the user clicked on

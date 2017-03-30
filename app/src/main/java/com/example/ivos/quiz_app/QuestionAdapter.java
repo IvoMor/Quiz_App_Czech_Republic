@@ -1,6 +1,7 @@
 package com.example.ivos.quiz_app;
 
 import android.content.Context;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -73,18 +74,18 @@ public class QuestionAdapter extends ArrayAdapter<Question> {
             // Make sure the view is visible
             imageView.setVisibility(View.VISIBLE);
         } else {
-            // Otherwise hide the ImageView (set visibility to GONE)
+            // Otherwise hide the ImageView (set visibility to GONE)                                ToDO set image as plaz button and set it clickable for playing sound
             imageView.setVisibility(View.GONE);
         }
 
         // Set the theme color for the list item
-        //View textContainer = listItemView.findViewById(R.id.text_container);                      Todo
+        View textContainer = listItemView.findViewById(R.id.text_container);
         // Find the color that the resource ID maps to
-        //int color = ContextCompat.getColor(getContext(), mColorResourceId);                       Todo
+        int color = ContextCompat.getColor(getContext(), mColorResourceId);
         // Set the background color of the text container View
-        //textContainer.setBackgroundColor(color);                                                  Todo
+        textContainer.setBackgroundColor(color);
 
-        // Return the whole list item layout (containing 2 TextViews) so that it can be shown in
+        // Return the whole list item layout
         // the ListView.
         return listItemView;
     }

@@ -35,6 +35,9 @@ public class Question {
     /** Constant value that represents no image question */
     private static final int NO_IMAGE_PROVIDED = -1;
 
+    /** Image resource ID for the question */
+    private boolean qIsImageId;
+
     /**
      * Create a new Question object - text type.
      *
@@ -61,6 +64,7 @@ public class Question {
      * @param answerText3 is 3. answer for qQuestionText
      * @param imageOrAudioResourceId id for image or sound
      * @param isImageId for image = true and for audio = false
+     * @param rightAnswerPosition says witch i true one
      */
     public Question(String questionText, String answerText1, String answerText2, String answerText3, int imageOrAudioResourceId, boolean isImageId, int rightAnswerPosition ) {
         qQuestionText = questionText;
@@ -69,6 +73,8 @@ public class Question {
         qAnswerText3 = answerText3;
         if (isImageId) qImageResourceId = imageOrAudioResourceId;
         else qAudioResourceId = imageOrAudioResourceId;
+        qIsImageId = isImageId;
+        qRightAnswerPosition = rightAnswerPosition;
     }
 
     /**
@@ -130,6 +136,8 @@ public class Question {
     public boolean hasAudio() {
         return qAudioResourceId != NO_IMAGE_PROVIDED;
     }
-
-
+    /**
+     * Returns information about type of question - image (true) or sound (false).
+     */
+    public boolean getIsImageId() { return qIsImageId; }
 }

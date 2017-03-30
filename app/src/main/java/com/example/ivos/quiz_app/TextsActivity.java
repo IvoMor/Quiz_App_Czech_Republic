@@ -56,7 +56,6 @@ public class TextsActivity extends AppCompatActivity {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-           // public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
                 // Get the {@link Question} object at the given position the user clicked on
                 Question question = questions.get(position);
 
@@ -82,9 +81,6 @@ public class TextsActivity extends AppCompatActivity {
                         break;
                 }
 
-                //debug helping
-                //radioButtonA.setTextColor(getResources().getColor(R.color.trueAnswer));
-
                 //if it is the right answer then colored text to green else to red
                 if (checkButtonPosition == question.getqRightAnswerPosition()) {
                     checkButton.setTextColor(getResources().getColor(R.color.trueAnswer));
@@ -93,8 +89,8 @@ public class TextsActivity extends AppCompatActivity {
                 }
 
                 // Create and setup the {@link MediaPlayer} for the audio resource associated
-                // with the current question
-               // mMediaPlayer = MediaPlayer.create(TextsActivity.this, question.getAudioResourceId());
+                // with the current question - teh
+               // mMediaPlayer = MediaPlayer.create(TextsActivity.this, question.getAudioResourceId());         TODO some noise
 
                 // Start the audio file
                 //mMediaPlayer.start();
