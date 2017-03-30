@@ -8,6 +8,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -17,7 +18,14 @@ public class TextsActivity extends AppCompatActivity {
     /**
      * Handles playback of all the sound files
      */
+
+    final int NUMBER_OF_TEXT_QUESTIONS = 4;
+
     private MediaPlayer mMediaPlayer;
+
+    public int textScore = 0;
+
+    public boolean[] openQuestion = {true, true, true, true};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,50 +58,70 @@ public class TextsActivity extends AppCompatActivity {
         listView.setAdapter(adapter);
 
 
-
         // Set a click listener to play the audio when the list item is clicked on
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
                 // Get the {@link Question} object at the given position the user clicked on
+
+                //if question is closed do nothing
+                if (!openQuestion[position]) return;
+
                 Question question = questions.get(position);
 
                 // debugging tools
-                Toast.makeText( TextsActivity.this, "Click", Toast.LENGTH_SHORT  ).show();
+                Toast.makeText(TextsActivity.this, "Click", Toast.LENGTH_SHORT).show();
 
 
                 // get the radioGroup
-                RadioGroup answerRadioGroup =(RadioGroup) view.findViewById(R.id.answer_radio_group);
+                RadioGroup answerRadioGroup = (RadioGroup) view.findViewById(R.id.answer_radio_group);
                 // save id of checked button
                 int checkButtonID = answerRadioGroup.getCheckedRadioButtonId();
+
+
+                //if no button check yet do nothing
+                if (checkButtonID == -1) return;
 
                 RadioButton checkButton = (RadioButton) view.findViewById(checkButtonID);
 
                 int checkButtonPosition = 0;
                 // which is checked 1 or 2 or 3
                 switch (checkButtonID) {
-                    case R.id.radio_button_answer_a : checkButtonPosition = 1;
+                    case R.id.radio_button_answer_a:
+                        checkButtonPosition = 1;
                         break;
-                    case R.id.radio_button_answer_b : checkButtonPosition = 2;
+                    case R.id.radio_button_answer_b:
+                        checkButtonPosition = 2;
                         break;
-                    case R.id.radio_button_answer_c : checkButtonPosition = 3;
+                    case R.id.radio_button_answer_c:
+                        checkButtonPosition = 3;
                         break;
                 }
 
                 //if it is the right answer then colored text to green else to red
                 if (checkButtonPosition == question.getqRightAnswerPosition()) {
                     checkButton.setTextColor(getResources().getColor(R.color.trueAnswer));
-                }  else {
+                    textScore++;
+                } else {
                     // if it is checked then false answer
-                    if (checkButtonPosition >0) checkButton.setTextColor(getResources().getColor(R.color.falseAnswer));
+                    checkButton.setTextColor(getResources().getColor(R.color.falseAnswer));
                 }
 
-                // Create and setup the {@link MediaPlayer} for the audio resource associated
-                // with the current question - teh
-               // mMediaPlayer = MediaPlayer.create(TextsActivity.this, question.getAudioResourceId());         TODO some noise
+                for(int i = 0; i < answerRadioGroup.getChildCount(); i++){
+                    ((RadioButton)answerRadioGroup.getChildAt(i)).setEnabled(false);
+                }
+
+
+                // Create and setup the {@link MediaPlayer} for the audio resource
+                mMediaPlayer = MediaPlayer.create(TextsActivity.this, R.raw.family_grandfather);
 
                 // Start the audio file
-                //mMediaPlayer.start();
+                mMediaPlayer.start();
+
+                openQuestion[position] = false;
+
+                TextView submitButton = (TextView) view.findViewById(R.id.submit_button);
+                submitButton.setVisibility(View.GONE);
             }
         });
     }
