@@ -3,7 +3,6 @@ package com.example.ivos.quiz_app;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -60,8 +59,8 @@ public class TextsActivity extends AppCompatActivity {
                 Question question = questions.get(position);
 
                 // debugging tools
-                Toast.makeText( TextsActivity.this, "Click", Toast.LENGTH_LONG  ).show();
-                Log.v("TextActivity", "Click");
+                Toast.makeText( TextsActivity.this, "Click", Toast.LENGTH_SHORT  ).show();
+
 
                 // get the radioGroup
                 RadioGroup answerRadioGroup =(RadioGroup) view.findViewById(R.id.answer_radio_group);
@@ -85,7 +84,8 @@ public class TextsActivity extends AppCompatActivity {
                 if (checkButtonPosition == question.getqRightAnswerPosition()) {
                     checkButton.setTextColor(getResources().getColor(R.color.trueAnswer));
                 }  else {
-                    checkButton.setTextColor(getResources().getColor(R.color.falseAnswer));
+                    // if it is checked then false answer
+                    if (checkButtonPosition >0) checkButton.setTextColor(getResources().getColor(R.color.falseAnswer));
                 }
 
                 // Create and setup the {@link MediaPlayer} for the audio resource associated

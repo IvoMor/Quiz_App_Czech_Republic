@@ -1,119 +1,111 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <!-- Layout for a single list item -->
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/colorAccent"
-    android:orientation="horizontal">
+    android:id="@+id/container"
+    android:background="@color/colorAccent">
 
-    <LinearLayout
-        android:id="@+id/text_container"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:orientation="vertical"
-        android:padding="@dimen/medium_padding">
+        <!--<ImageView
+            android:id="@+id/imageView4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
+            android:visibility="visible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/flag3rot" />-->
 
-        <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-            <ImageView
-                android:id="@+id/imageView4"
+            <TextView
+                android:id="@+id/question_textview"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:adjustViewBounds="true"
-                android:visibility="visible"
-                android:scaleType="fitXY"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/flag3rot" />
+                android:gravity="start"
+                android:paddingBottom="@dimen/small_padding"
+                android:textAppearance="?android:textAppearanceMedium"
+                android:textColor="@color/question_texts"
+                android:textStyle="bold"
+                android:focusable="false"
+                tools:text="What do you know? What do you know? What do you know?" />
 
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:orientation="horizontal">
 
+                <ImageView
+                    android:id="@+id/image"
+                    android:layout_width="@dimen/question_image_width"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_horizontal"
+                    android:adjustViewBounds="true"
+                    android:maxWidth="@dimen/question_image_width"
+                    android:scaleType="fitXY"
+                    android:visibility="visible"
+                    app:srcCompat="@drawable/flag3rot"/>
 
-
-                <TextView
-                    android:id="@+id/question_textview"
+                <RadioGroup
+                    android:id="@+id/answer_radio_group"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="start"
-                    android:paddingBottom="@dimen/small_padding"
-                    android:textAppearance="?android:textAppearanceMedium"
-                    android:textColor="@color/question_texts"
-                    android:textStyle="bold"
-                    tools:text="What do you know? What do you know? What do you know?" />
+                    android:orientation="vertical">
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <ImageView
-                        android:id="@+id/image"
-                        android:layout_width="@dimen/question_image_width"
-                        android:layout_height="match_parent"
-                        android:layout_gravity="center_horizontal"
-                        android:scaleType="fitXY"
-                        android:adjustViewBounds="true"
-                        android:maxWidth="@dimen/question_image_width"
-                        android:visibility="visible"
-                        app:srcCompat="@drawable/flag3rot" />
-
-                    <RadioGroup
-                        android:id="@+id/answer_radio_group"
+                    <RadioButton
+                        android:id="@+id/radio_button_answer_a"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical">
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:checked="false"
+                        android:focusable="false"
+                        android:minHeight="@dimen/big_padding"
+                        android:text="@string/nothing"
+                        android:textAppearance="?android:textAppearanceMedium"
+                        android:textColor="@color/question_texts"
+                        android:visibility="visible"
+                        app:buttonTint="@color/primary_color" />
 
-                        <RadioButton
-                            android:id="@+id/radio_button_answer_a"
-                            android:layout_width="match_parent"
-                            android:layout_height="0dp"
-                            android:layout_weight="1"
-                            android:checked="false"
-                            android:minHeight="@dimen/big_padding"
-                            android:text="@string/nothing"
-                            android:textAppearance="?android:textAppearanceMedium"
-                            android:textColor="@color/question_texts"
-                            android:visibility="visible"
-                            app:buttonTint="@color/primary_color" />
+                    <RadioButton
+                        android:id="@+id/radio_button_answer_b"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:checked="false"
+                        android:focusable="false"
+                        android:text="@string/nothing"
+                        android:textAppearance="?android:textAppearanceMedium"
+                        android:textColor="@color/question_texts"
+                        android:visibility="visible"
+                        app:buttonTint="@color/primary_color" />
 
-                        <RadioButton
-                            android:id="@+id/radio_button_answer_b"
-                            android:layout_width="match_parent"
-                            android:layout_height="0dp"
-                            android:layout_weight="1"
-                            android:checked="false"
-                            android:text="@string/nothing"
-                            android:textAppearance="?android:textAppearanceMedium"
-                            android:textColor="@color/question_texts"
-                            android:visibility="visible"
-                            app:buttonTint="@color/primary_color" />
+                    <RadioButton
+                        android:id="@+id/radio_button_answer_c"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:checked="false"
+                        android:focusable="false"
+                        android:text="@string/nothing"
+                        android:textAppearance="?android:textAppearanceMedium"
+                        android:textColor="@color/question_texts"
+                        android:visibility="visible"
+                        app:buttonTint="@color/primary_color" />
 
-                        <RadioButton
-                            android:id="@+id/radio_button_answer_c"
-                            android:layout_width="match_parent"
-                            android:layout_height="0dp"
-                            android:layout_weight="1"
-                            android:checked="false"
-                            android:text="@string/nothing"
-                            android:textAppearance="?android:textAppearanceMedium"
-                            android:textColor="@color/question_texts"
-                            android:visibility="visible"
-                            app:buttonTint="@color/primary_color" />
-
-                    </RadioGroup>
-                </LinearLayout>
+                </RadioGroup>
             </LinearLayout>
-        </RelativeLayout>
-    </LinearLayout>
-</LinearLayout>
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Submit answer (definitely)"
+                android:layout_gravity="center_horizontal"/>
+        </LinearLayout>
+</RelativeLayout>
