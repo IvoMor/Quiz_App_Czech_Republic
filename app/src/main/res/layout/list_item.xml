@@ -84,8 +84,7 @@
                             android:textAppearance="?android:textAppearanceMedium"
                             android:textColor="@color/question_texts"
                             android:visibility="visible"
-                            app:buttonTint="@color/primary_color"
-                            android:onClick="onRadioButtonClicked"/>
+                            app:buttonTint="@color/primary_color" />
 
                         <RadioButton
                             android:id="@+id/radio_button_answer_b"
@@ -97,8 +96,7 @@
                             android:textAppearance="?android:textAppearanceMedium"
                             android:textColor="@color/question_texts"
                             android:visibility="visible"
-                            app:buttonTint="@color/primary_color"
-                            android:onClick="onRadioButtonClicked"/>
+                            app:buttonTint="@color/primary_color" />
 
                         <RadioButton
                             android:id="@+id/radio_button_answer_c"
@@ -110,8 +108,7 @@
                             android:textAppearance="?android:textAppearanceMedium"
                             android:textColor="@color/question_texts"
                             android:visibility="visible"
-                            app:buttonTint="@color/primary_color"
-                            android:onClick="onRadioButtonClicked"/>
+                            app:buttonTint="@color/primary_color" />
 
                     </RadioGroup>
                 </LinearLayout>

@@ -57,12 +57,12 @@ public class QuestionAdapter extends ArrayAdapter<Question> {
         // Find the RadioButton in the list_item.xml layout with the ID radio_button_answer_a.
         RadioButton answerBtextView = (RadioButton) listItemView.findViewById(R.id.radio_button_answer_b);
         // Set the text for answer B
-        answerBtextView.setText(currentQuestion.getAnswerText1());
+        answerBtextView.setText(currentQuestion.getAnswerText2());
 
         // Find the RadioButton in the list_item.xml layout with the ID radio_button_answer_a.
         RadioButton answerCtextView = (RadioButton) listItemView.findViewById(R.id.radio_button_answer_c);
         // Set the text for answer C
-        answerCtextView.setText(currentQuestion.getAnswerText1());
+        answerCtextView.setText(currentQuestion.getAnswerText3());
 
         // Find the ImageView in the list_item.xml layout with the ID image.
         ImageView imageView = (ImageView) listItemView.findViewById(R.id.image);

@@ -6,7 +6,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.RadioButton;
 
 import java.util.ArrayList;
 
@@ -54,9 +53,9 @@ public class TextsActivity extends AppCompatActivity {
                 // Get the {@link Question} object at the given position the user clicked on
                 Question question = questions.get(position);
 
-                RadioButton radioButtonA = (RadioButton) view.findViewById(R.id.radio_button_answer_a);
-                RadioButton radioButtonB = (RadioButton) view.findViewById(R.id.radio_button_answer_b);
-                RadioButton radioButtonC = (RadioButton) view.findViewById(R.id.radio_button_answer_c);
+//                RadioButton radioButtonA = (RadioButton) view.findViewById(R.id.radio_button_answer_a);
+//                RadioButton radioButtonB = (RadioButton) view.findViewById(R.id.radio_button_answer_b);
+//                RadioButton radioButtonC = (RadioButton) view.findViewById(R.id.radio_button_answer_c);
 
 //                switch(question.getqRightAnswerPosition()) {
 //                    case 1 :
@@ -88,10 +87,10 @@ public class TextsActivity extends AppCompatActivity {
 
                 // Create and setup the {@link MediaPlayer} for the audio resource associated
                 // with the current question
-                mMediaPlayer = MediaPlayer.create(TextsActivity.this, question.getAudioResourceId());
+//                mMediaPlayer = MediaPlayer.create(TextsActivity.this, question.getAudioResourceId());
 
                 // Start the audio file
-                mMediaPlayer.start();
+//                mMediaPlayer.start();
             }
         });
     }
