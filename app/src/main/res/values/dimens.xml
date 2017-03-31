@@ -9,5 +9,5 @@
     <dimen name="small_margin">8dp</dimen>
     <dimen name="medium_margin">16dp</dimen>
     <dimen name="big_margin">24dp</dimen>
-
+    <dimen name="correctCeckedSize">36dp</dimen>
 </resources>

@@ -31,8 +31,17 @@
     <color name="MainButtonsText">#404040</color>
 
     <!-- True answer text after checked -->
-    <color name="trueAnswer">#00c000</color>
+    <color name="trueAnswer">#0000ff</color>
+
+    <!-- True answer background color after checked -->
+    <color name="trueAnswerBackground">#c0c0ff</color>
+
+    <!-- submitButton submitButtonBackgroundTint -->
+    <color name="submitButtonBackgroundTint">#c0ffc0</color>
 
     <!-- False answer text after checked -->
     <color name="falseAnswer">#c00000</color>
+
+    <!-- False answer background color after checked -->
+    <color name="falseAnswerBackground">#ffc0c0</color>
 </resources>

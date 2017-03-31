@@ -8,6 +8,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -98,17 +99,20 @@ public class TextsActivity extends AppCompatActivity {
                         break;
                 }
 
-                //if it is the right answer then colored text to green else to red
+                RelativeLayout container_list_item = (RelativeLayout) view.findViewById(R.id.container);
+                //if it is the right answer then colored text and background to blue else to red
                 if (checkButtonPosition == question.getqRightAnswerPosition()) {
                     checkButton.setTextColor(getResources().getColor(R.color.trueAnswer));
+                    container_list_item.setBackgroundColor(getResources().getColor(R.color.trueAnswerBackground));
                     textScore++;
                 } else {
-                    // if it is checked then false answer
+                    // false answer
                     checkButton.setTextColor(getResources().getColor(R.color.falseAnswer));
+                    container_list_item.setBackgroundColor(getResources().getColor(R.color.falseAnswerBackground));
                 }
 
                 for(int i = 0; i < answerRadioGroup.getChildCount(); i++){
-                    ((RadioButton)answerRadioGroup.getChildAt(i)).setEnabled(false);
+                    (answerRadioGroup.getChildAt(i)).setEnabled(false);
                 }
 
 
@@ -119,6 +123,7 @@ public class TextsActivity extends AppCompatActivity {
                 mMediaPlayer.start();
 
                 openQuestion[position] = false;
+
 
                 TextView submitButton = (TextView) view.findViewById(R.id.submit_button);
                 submitButton.setVisibility(View.GONE);

@@ -10,9 +10,9 @@ import android.widget.TextView;
 public class MainActivity extends AppCompatActivity {
 
     private int totalScore = 0;
-    private int imageQuestionsScore = 0;
-    private int textQuestionsScore = 0;
-    private int soundQuestionsScore = 0;
+    public int imageQuestionsScore = 0;
+    public int textQuestionsScore = 0;
+    public int soundQuestionsScore = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -8,16 +8,22 @@
     <!-- Category name for text question quiz  -->
     <string name="Text_questions">Text questions</string>
 
-    <!-- Category name for text question quiz  -->
+    <!-- Category name for sound question quiz  -->
     <string name="Sound_questions">Sound questions</string>
 
-    <!-- Category name for the vocabulary questions for family members  -->
+    <!-- Total_score text  -->
     <string name="Total_score">Total score:</string>
 
-    <!-- Category name for the vocabulary questions for family members  -->
-    <string name="cz">CZ</string>
+    <!-- slected language  -->
+    <string name="cz_en">CZ(en)</string>
 
-    <string name="en">EN</string>
+    <!-- slected language  -->
+    <string name="en_cz">EN(cz)</string>
 
-    <string name="nothing">Nothing</string>
+
+    <string name="nothing">Nothing_else</string>
+
+    <!-- name enter hint  -->
+    <string name="name_request">Your_name_here</string>
+    <string name="submit_answer_button_text">Submit answer (definitely)</string>
 </resources>
