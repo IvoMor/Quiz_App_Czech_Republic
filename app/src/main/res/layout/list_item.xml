@@ -7,7 +7,7 @@
     android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="@dimen/small_margin"
+    android:padding="@dimen/small_padding"
     android:background="@color/colorAccent">
 
 
@@ -15,6 +15,7 @@
         android:id="@+id/question_textview_konteirner"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:paddingBottom="@dimen/big_padding"
         android:orientation="horizontal">
 
         <TextView
@@ -113,7 +114,6 @@
         android:text="@string/submit_answer_button_text"
         android:textAlignment="center"
         android:textAppearance="?android:textAppearanceMedium"
-        android:layout_margin="8dp"
         android:layout_below="@+id/answer_radio_group" />
 
 </RelativeLayout>

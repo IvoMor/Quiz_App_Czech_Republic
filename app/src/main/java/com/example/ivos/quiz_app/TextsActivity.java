@@ -1,5 +1,6 @@
 package com.example.ivos.quiz_app;
 
+import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -28,10 +29,36 @@ public class TextsActivity extends AppCompatActivity {
 
     public boolean[] openQuestion = {true, true, true, true};
 
+    public void onBackPressed() {
+        Intent backIntent = new Intent(TextsActivity.this, MainActivity.class);
+        backIntent.putExtra("textQuestionsScore", String.valueOf(textScore));
+        backIntent.putExtra("textQuestionsCount", String.valueOf(NUMBER_OF_TEXT_QUESTIONS));
+        backIntent.putExtra("sendFrom", "Text");
+        startActivity(backIntent);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.question_list);
+
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            textScore = Integer.valueOf(extras.getString("textQuestionsScore"));
+
+            //The key argument here must match that used in the other activity
+        }
+
+
+       /* LinearLayo
+       ut linearLayout = new LinearLayout(this);
+        setContentView(linearLayout);
+        linearLayout.setOrientation(LinearLayout.HORIZONTAL);
+
+        TextView textView = new TextView(this);
+        textView.setText("Text score : " + String.valueOf(textScore));
+        linearLayout.addView(textView);
+*/
 
         // Create a list of questions
         final ArrayList<Question> questions = new ArrayList<Question>();
@@ -104,7 +131,7 @@ public class TextsActivity extends AppCompatActivity {
                 if (checkButtonPosition == question.getqRightAnswerPosition()) {
                     checkButton.setTextColor(getResources().getColor(R.color.trueAnswer));
                     container_list_item.setBackgroundColor(getResources().getColor(R.color.trueAnswerBackground));
-                    textScore++;
+                    setTitle("Text questions score = " + ++textScore + " / " + NUMBER_OF_TEXT_QUESTIONS );
                 } else {
                     // false answer
                     checkButton.setTextColor(getResources().getColor(R.color.falseAnswer));
