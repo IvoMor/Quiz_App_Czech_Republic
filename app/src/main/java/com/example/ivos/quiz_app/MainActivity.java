@@ -11,7 +11,7 @@ import android.widget.Toast;
 public class MainActivity extends AppCompatActivity {
 
     private int totalScore = 0;
-    public int imageQuestionsScore = 0;
+    public int imageQuestionsScore = 1;
     public int imageQuestionsCount = 0;
     public boolean imageAnswered = false;
 
@@ -19,7 +19,7 @@ public class MainActivity extends AppCompatActivity {
     public int textQuestionsCount = 0;
     public boolean textAnswered = false;
 
-    public int soundQuestionsScore = 0;
+    public int soundQuestionsScore = 3;
     public int soundQuestionsCount = 0;
     public boolean soundAnswered = false;
 
