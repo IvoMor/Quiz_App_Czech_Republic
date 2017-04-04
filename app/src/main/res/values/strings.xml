@@ -25,5 +25,16 @@
 
     <!-- name enter hint  -->
     <string name="name_request">Your_name_here</string>
+
+    <!--submit_answer_button_text-->
     <string name="submit_answer_button_text">Submit answer (definitely)</string>
+
+    <!--defaultUserName-->
+    <string name="default_user_name">your_name</string>
+
+    <!--totalScoreText2-->
+    <string name="totalScoreText2">\'s score:</string>
+
+    <!--sendFrom-->
+    <string name="sendFrom">sendFrom</string>
 </resources>

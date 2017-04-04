@@ -1,27 +1,164 @@
 package com.example.ivos.quiz_app;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import static com.example.ivos.quiz_app.R.id.image_score_counter;
+import static com.example.ivos.quiz_app.R.id.sound_score_counter;
+import static com.example.ivos.quiz_app.R.id.user_name;
+
 public class MainActivity extends AppCompatActivity {
 
-    private int totalScore = 0;
-    public int imageQuestionsScore = 1;
+    //initialization
+    private TextView userNameTextView = null;
+    public String userName = "your_name";
+
+    public int imageQuestionsScore = 0;
     public int imageQuestionsCount = 0;
     public boolean imageAnswered = false;
 
-    public int textQuestionsScore = 2;
+    public int textQuestionsScore = 0;
     public int textQuestionsCount = 0;
     public boolean textAnswered = false;
 
-    public int soundQuestionsScore = 3;
+    public int soundQuestionsScore = 0;
     public int soundQuestionsCount = 0;
     public boolean soundAnswered = false;
+
+    SharedPreferences sharedPref = null;
+
+    private long backPressedTime = 0;
+
+    static final String UN = "userName";
+    static final String IQS = "imageQuestionsScore";
+    static final String IQC = "imageQuestionsCount";
+    static final String IA = "imageAnswered";
+    static final String TQS = "textQuestionsScore";
+    static final String TQC = "textQuestionsCount";
+    static final String TA = "textAnswered";
+    static final String SQS = "soundQuestionsScore";
+    static final String SQC = "soundQuestionsCount";
+    static final String SA = "soundAnswered";
+
+    @Override
+    public void onSaveInstanceState(Bundle savedInstanceState) {
+        // Save the user's current game state
+        savedInstanceState.putString(UN, userName);
+        savedInstanceState.putInt(IQS, imageQuestionsScore);
+        savedInstanceState.putInt(IQC, imageQuestionsCount);
+        savedInstanceState.putBoolean(IA, imageAnswered);
+        savedInstanceState.putInt(TQS, textQuestionsScore);
+        savedInstanceState.putInt(TQC, textQuestionsCount);
+        savedInstanceState.putBoolean(TA, textAnswered);
+        savedInstanceState.putInt(SQS, soundQuestionsScore);
+        savedInstanceState.putInt(SQC, soundQuestionsCount);
+        savedInstanceState.putBoolean(SA, soundAnswered);
+
+        // Always call the superclass so it can save the view hierarchy state
+        super.onSaveInstanceState(savedInstanceState);
+    }
+
+    public void onRestoreInstanceState(Bundle savedInstanceState) {
+        // Always call the superclass so it can restore the view hierarchy
+        super.onRestoreInstanceState(savedInstanceState);
+
+        // Restore state members from saved instance
+        userName = savedInstanceState.getString(UN);
+        imageQuestionsScore = savedInstanceState.getInt(IQS);
+        imageQuestionsCount = savedInstanceState.getInt(IQC);
+        imageAnswered = savedInstanceState.getBoolean(IA);
+        textQuestionsScore = savedInstanceState.getInt(TQS);
+        textQuestionsCount = savedInstanceState.getInt(TQC);
+        textAnswered = savedInstanceState.getBoolean(TA);
+        soundQuestionsScore = savedInstanceState.getInt(SQS);
+        soundQuestionsCount = savedInstanceState.getInt(SQC);
+        soundAnswered = savedInstanceState.getBoolean(SA);
+
+        // display data again
+
+        TextView imageScore = (TextView) findViewById(image_score_counter);
+        imageScore.setText(String.valueOf(imageQuestionsScore));
+
+        TextView textScore = (TextView) findViewById(R.id.text_score_counter);
+        textScore.setText(String.valueOf(textQuestionsScore));
+
+        TextView soundScore = (TextView) findViewById(sound_score_counter);
+        soundScore.setText(String.valueOf(soundQuestionsScore));
+
+        if (!userName.equals("your_name")) {
+            TextView totalScoreTextView = (TextView) findViewById(R.id.total_score);
+            totalScoreTextView.setText(userName + getString(R.string.totalScoreText2));
+        }
+
+
+        int totalScore = imageQuestionsScore + textQuestionsScore + soundQuestionsScore;
+        TextView totalScoreView = (TextView) findViewById(R.id.total_score_counter);
+        totalScoreView.setText(String.valueOf(totalScore));
+    }
+
+    public void saveSharedPref() {
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putInt("imageQuestionsScore", imageQuestionsScore);
+        editor.putInt("textQuestionsScore", textQuestionsScore);
+        editor.putInt("soundQuestionsScore", soundQuestionsScore);
+        editor.putString("userName", userName);
+        editor.apply();
+    }
+
+    //load and show sharedPrefImor
+    public void loadSharedPref() {
+        imageQuestionsScore = sharedPref.getInt("imageQuestionsScore", 0);
+        textQuestionsScore = sharedPref.getInt("textQuestionsScore", 0);
+        soundQuestionsScore = sharedPref.getInt("soundQuestionsScore", 0);
+        userName = sharedPref.getString("userName", getString(R.string.default_user_name));
+
+    }
+
+    public void refresh() {
+        TextView imageScore = (TextView) findViewById(image_score_counter);
+        imageScore.setText(String.valueOf(imageQuestionsScore));
+
+        TextView textScore = (TextView) findViewById(R.id.text_score_counter);
+        textScore.setText(String.valueOf(textQuestionsScore));
+
+        TextView soundScore = (TextView) findViewById(sound_score_counter);
+        soundScore.setText(String.valueOf(soundQuestionsScore));
+
+        if (!userName.equals("your_name")) {
+            TextView userNameTextView = (TextView) findViewById(R.id.user_name);
+            userNameTextView.setText(userName);
+            TextView totalScoreTextView = (TextView) findViewById(R.id.total_score);
+            totalScoreTextView.setText(userName + getString(R.string.totalScoreText2));
+        }
+    }
+
+    public void onBackPressed() {        // to prevent irritating accidental logouts
+        long t = System.currentTimeMillis();
+        if (t - backPressedTime > 2000) {    // 2 secs
+            backPressedTime = t;
+            Toast.makeText(this, "Press back again to exit",
+                    Toast.LENGTH_SHORT).show();
+        } else {    // this guy is serious
+            // clean up
+            super.onBackPressed();       // bye
+        }
+    }
+
+    @Override
+    protected void onResume() {
+
+
+        super.onResume();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,37 +166,88 @@ public class MainActivity extends AppCompatActivity {
 
         // Set the content of the activity to use the activity_main.xml layout file
         setContentView(R.layout.activity_main);
+        sharedPref = MainActivity.this.getPreferences(Context.MODE_PRIVATE);
 
-        //back send scores
+        // change the hint Text in EditText View OnFocus and back
+        userNameTextView = (TextView) findViewById(user_name);
+        if (!userName.equals("your_name")) userNameTextView.setText(userName);
+
+        userNameTextView.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus) {
+                    userNameTextView.setHint("write_here");
+                } else {
+                    userNameTextView.setHint("your_name");
+                }
+            }
+        });
+
+        // change another TextView TeamAname2 with new TeamAname
+
+        userNameTextView.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void afterTextChanged(Editable s) {
+                TextView totalScoreTextView = (TextView) findViewById(R.id.total_score);
+                userName = s.toString();
+                totalScoreTextView.setText(userName + getString(R.string.totalScoreText2));
+                userNameTextView.setTextColor(getResources().getColor(R.color.primary_dark_color));
+                userNameTextView.setCursorVisible(false);
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start,
+                                          int count, int after) {
+                userNameTextView.setCursorVisible(true);
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start,
+                                      int before, int count) {
+            }
+        });
+
+        //back send scores from other activities by sending extras
         Bundle extras = getIntent().getExtras();
 
         if (extras != null) {
             Toast.makeText(MainActivity.this, extras.getString("sendFrom"), Toast.LENGTH_SHORT).show();
-            switch (extras.getString("sendFrom"))  {
+
+            //reload saved values set from SharedPreferences
+            loadSharedPref();
+            refresh();
+
+            switch (extras.getString(getString(R.string.sendFrom)))  {
                 case "Image":
                     imageQuestionsScore = Integer.valueOf(extras.getString("imageQuestionsScore"));
                     imageQuestionsCount = Integer.valueOf(extras.getString("imageQuestionsCount"));
-                    TextView imageScore = (TextView) findViewById(R.id.image_score_counter);
-                    imageScore.setText(String.valueOf(imageQuestionsScore));
+                    //image answers done
                     imageAnswered = true;
                     break;
                 case "Text":
                     textQuestionsScore = Integer.valueOf(extras.getString("textQuestionsScore"));
                     textQuestionsCount = Integer.valueOf(extras.getString("textQuestionsCount"));
-                    //Toast.makeText(MainActivity.this, String.valueOf(textQuestionsScore), Toast.LENGTH_SHORT).show();
-                    TextView textScore = (TextView) findViewById(R.id.text_score_counter);
-                    textScore.setText(String.valueOf(textQuestionsScore));
+                    //text answers done
                     textAnswered = true;
                     break;
                 case "Sound":
                     soundQuestionsScore = Integer.valueOf(extras.getString("soundQuestionsScore"));
                     soundQuestionsCount = Integer.valueOf(extras.getString("soundQuestionsCount"));
-                    TextView soundScore = (TextView) findViewById(R.id.sound_score_counter);
-                    soundScore.setText(String.valueOf(soundQuestionsScore));
+                    //sound answers done
                     soundAnswered = true;
                     break;
             }
-            totalScore = imageQuestionsScore + textQuestionsScore + soundQuestionsScore;
+
+            TextView imageScore = (TextView) findViewById(image_score_counter);
+            imageScore.setText(String.valueOf(imageQuestionsScore));
+
+            TextView textScore = (TextView) findViewById(R.id.text_score_counter);
+            textScore.setText(String.valueOf(textQuestionsScore));
+
+            TextView soundScore = (TextView) findViewById(sound_score_counter);
+            soundScore.setText(String.valueOf(soundQuestionsScore));
+
+            int totalScore = imageQuestionsScore + textQuestionsScore + soundQuestionsScore;
             TextView totalScoreView = (TextView) findViewById(R.id.total_score_counter);
             totalScoreView.setText(String.valueOf(totalScore));
         }
@@ -74,6 +262,8 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 // Create a new intent to open the {@link ImagesActivity}
                 if (!imageAnswered) {
+                    //save score before start intent by Shared Preferences
+                    saveSharedPref();
                     Intent imagesIntent = new Intent(MainActivity.this, ImagesActivity.class);
                     imagesIntent.putExtra("textQuestionsScore", String.valueOf(textQuestionsScore));
                     // Start the new activity
@@ -93,6 +283,8 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 // Create a new intent to open the {@link TextsActivity}
                 if (!textAnswered) {
+                    //save score before start intent by Shared Preferences
+                    saveSharedPref();
                     Intent textsIntent = new Intent(MainActivity.this, TextsActivity.class);
                     textsIntent.putExtra("textQuestionsScore", String.valueOf(textQuestionsScore));
                     // Start the new activity
@@ -111,6 +303,8 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 // Create a new intent to open the {@link SoundsActivity}
                 if (!soundAnswered) {
+                    //save score before start intent by Shared Preferences
+                    saveSharedPref();
                     Intent soundsIntent = new Intent(MainActivity.this, SoundsActivity.class);
                     soundsIntent.putExtra("soundQuestionsScore", String.valueOf(soundQuestionsScore));
                     // Start the new activity

@@ -1,11 +1,16 @@
 package com.example.ivos.quiz_app;
 
+import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
+import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -14,6 +19,17 @@ public class ImagesActivity extends AppCompatActivity {
     /** Handles playback of all the sound files */
     private MediaPlayer mMediaPlayer;
 
+    public int imageScore = 0;
+
+    public boolean[] openQuestion = {true, true, true, true};
+
+    public void onBackPressed() {
+        Intent backIntent = new Intent(ImagesActivity.this, MainActivity.class);
+        backIntent.putExtra("imageQuestionsScore", String.valueOf(imageScore));
+        backIntent.putExtra("imageQuestionsCount", String.valueOf(openQuestion.length));
+        backIntent.putExtra("sendFrom", "Image");
+        startActivity(backIntent);
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,8 +64,58 @@ public class ImagesActivity extends AppCompatActivity {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {                         //TODO doesn't work
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+
+                //if question is closed do nothing
+                if (!openQuestion[position]) return;
+
                 // Get the {@link Question} object at the given position the user clicked on
                 Question question = questions.get(position);
+
+                // debugging tools
+                Toast.makeText(ImagesActivity.this, "Click", Toast.LENGTH_SHORT).show();
+
+                // get the radioGroup
+                RadioGroup answerRadioGroup = (RadioGroup) view.findViewById(R.id.answer_radio_group);
+
+                // save id of checked button
+                int checkButtonID = answerRadioGroup.getCheckedRadioButtonId();
+
+
+                //if no button check yet do nothing
+                if (checkButtonID == -1) return;
+
+                RadioButton checkButton = (RadioButton) view.findViewById(checkButtonID);
+
+                int checkButtonPosition = 0;
+                // which is checked 1 or 2 or 3
+                switch (checkButtonID) {
+                    case R.id.radio_button_answer_a:
+                        checkButtonPosition = 1;
+                        break;
+                    case R.id.radio_button_answer_b:
+                        checkButtonPosition = 2;
+                        break;
+                    case R.id.radio_button_answer_c:
+                        checkButtonPosition = 3;
+                        break;
+                }
+
+                RelativeLayout container_list_item = (RelativeLayout) view.findViewById(R.id.container);
+                //if it is the right answer then colored text and background to blue else to red
+                if (checkButtonPosition == question.getqRightAnswerPosition()) {
+                    checkButton.setTextColor(getResources().getColor(R.color.trueAnswer));
+                    container_list_item.setBackgroundColor(getResources().getColor(R.color.trueAnswerBackground));
+                    setTitle("Text questions score = " + ++imageScore + " / " + openQuestion.length );
+                } else {
+                    // false answer
+                    checkButton.setTextColor(getResources().getColor(R.color.falseAnswer));
+                    container_list_item.setBackgroundColor(getResources().getColor(R.color.falseAnswerBackground));
+                }
+
+                for(int i = 0; i < answerRadioGroup.getChildCount(); i++){
+                    (answerRadioGroup.getChildAt(i)).setEnabled(false);
+                }
+
 
                 // Create and setup the {@link MediaPlayer} for the audio resource associated
                 // with the current question

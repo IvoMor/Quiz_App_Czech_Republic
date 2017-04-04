@@ -20,9 +20,6 @@ public class TextsActivity extends AppCompatActivity {
     /**
      * Handles playback of all the sound files
      */
-
-    final int NUMBER_OF_TEXT_QUESTIONS = 4;
-
     private MediaPlayer mMediaPlayer;
 
     public int textScore = 0;
@@ -32,7 +29,7 @@ public class TextsActivity extends AppCompatActivity {
     public void onBackPressed() {
         Intent backIntent = new Intent(TextsActivity.this, MainActivity.class);
         backIntent.putExtra("textQuestionsScore", String.valueOf(textScore));
-        backIntent.putExtra("textQuestionsCount", String.valueOf(NUMBER_OF_TEXT_QUESTIONS));
+        backIntent.putExtra("textQuestionsCount", String.valueOf(openQuestion.length));
         backIntent.putExtra("sendFrom", "Text");
         startActivity(backIntent);
     }
@@ -42,23 +39,12 @@ public class TextsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.question_list);
 
-        Bundle extras = getIntent().getExtras();
-        if (extras != null) {
-            textScore = Integer.valueOf(extras.getString("textQuestionsScore"));
-
+        //Bundle extras = getIntent().getExtras();
+        //if (extras != null) {
+            //sende
+         //   textScore = Integer.valueOf(extras.getString("textQuestionsScore"));
             //The key argument here must match that used in the other activity
-        }
-
-
-       /* LinearLayo
-       ut linearLayout = new LinearLayout(this);
-        setContentView(linearLayout);
-        linearLayout.setOrientation(LinearLayout.HORIZONTAL);
-
-        TextView textView = new TextView(this);
-        textView.setText("Text score : " + String.valueOf(textScore));
-        linearLayout.addView(textView);
-*/
+        //}
 
         // Create a list of questions
         final ArrayList<Question> questions = new ArrayList<Question>();
@@ -70,7 +56,6 @@ public class TextsActivity extends AppCompatActivity {
                 "Italy", "Germany", "France", 2));
         questions.add(new Question("How tall is Sněžka, the highest peak in the Czech Republic?",
                 "1402 m a.s.l.", "1502 m a.s.l.", "1602 m a.s.l.", 3));
-
 
         // Create an {@link QuestionAdapter}, whose data source is a list of {@link Question}s. The
         // adapter knows how to create list items for each item in the list.
@@ -90,22 +75,21 @@ public class TextsActivity extends AppCompatActivity {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-                // Get the {@link Question} object at the given position the user clicked on
 
                 //if question is closed do nothing
                 if (!openQuestion[position]) return;
 
+                // Get the {@link Question} object at the given position the user clicked on
                 Question question = questions.get(position);
 
                 // debugging tools
                 Toast.makeText(TextsActivity.this, "Click", Toast.LENGTH_SHORT).show();
 
-
                 // get the radioGroup
                 RadioGroup answerRadioGroup = (RadioGroup) view.findViewById(R.id.answer_radio_group);
+
                 // save id of checked button
                 int checkButtonID = answerRadioGroup.getCheckedRadioButtonId();
-
 
                 //if no button check yet do nothing
                 if (checkButtonID == -1) return;
@@ -131,7 +115,7 @@ public class TextsActivity extends AppCompatActivity {
                 if (checkButtonPosition == question.getqRightAnswerPosition()) {
                     checkButton.setTextColor(getResources().getColor(R.color.trueAnswer));
                     container_list_item.setBackgroundColor(getResources().getColor(R.color.trueAnswerBackground));
-                    setTitle("Text questions score = " + ++textScore + " / " + NUMBER_OF_TEXT_QUESTIONS );
+                    setTitle("Text questions score = " + ++textScore + " / " + openQuestion.length );
                 } else {
                     // false answer
                     checkButton.setTextColor(getResources().getColor(R.color.falseAnswer));
