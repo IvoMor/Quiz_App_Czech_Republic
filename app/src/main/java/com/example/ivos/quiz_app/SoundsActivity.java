@@ -3,6 +3,7 @@ package com.example.ivos.quiz_app;
 import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
@@ -103,12 +104,12 @@ public class SoundsActivity extends AppCompatActivity {
                 //if it is the right answer then colored text and background to blue else to red
                 if (checkButtonPosition == question.getqRightAnswerPosition()) {
                     checkButton.setTextColor(getResources().getColor(R.color.trueAnswer));
-                    container_list_item.setBackgroundColor(getResources().getColor(R.color.trueAnswerBackground));
+                    container_list_item.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.trueAnswerBackground));
                     setTitle("Text questions score = " + ++soundScore + " / " + openQuestion.length );
                 } else {
                     // false answer
-                    checkButton.setTextColor(getResources().getColor(R.color.falseAnswer));
-                    container_list_item.setBackgroundColor(getResources().getColor(R.color.falseAnswerBackground));
+                    checkButton.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.falseAnswer));
+                    container_list_item.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.falseAnswerBackground));
                 }
 
                 for(int i = 0; i < answerRadioGroup.getChildCount(); i++){

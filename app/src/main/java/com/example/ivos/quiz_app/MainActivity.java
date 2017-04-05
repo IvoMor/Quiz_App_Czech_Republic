@@ -1,20 +1,18 @@
 package com.example.ivos.quiz_app;
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import static com.example.ivos.quiz_app.R.id.image_score_counter;
 import static com.example.ivos.quiz_app.R.id.sound_score_counter;
-import static com.example.ivos.quiz_app.R.id.user_name;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -33,6 +31,8 @@ public class MainActivity extends AppCompatActivity {
     public int soundQuestionsScore = 0;
     public int soundQuestionsCount = 0;
     public boolean soundAnswered = false;
+
+    public int userTotalScore = 0;
 
     SharedPreferences sharedPref = null;
 
@@ -96,15 +96,16 @@ public class MainActivity extends AppCompatActivity {
 
         if (!userName.equals("your_name")) {
             TextView totalScoreTextView = (TextView) findViewById(R.id.total_score);
-            totalScoreTextView.setText(userName + getString(R.string.totalScoreText2));
+            String userNameTextMessage = userName + getString(R.string.totalScoreText2);
+            totalScoreTextView.setText(userNameTextMessage);
         }
-
 
         int totalScore = imageQuestionsScore + textQuestionsScore + soundQuestionsScore;
         TextView totalScoreView = (TextView) findViewById(R.id.total_score_counter);
         totalScoreView.setText(String.valueOf(totalScore));
     }
 
+    //save sharedPrefImor
     public void saveSharedPref() {
         SharedPreferences.Editor editor = sharedPref.edit();
         editor.putInt("imageQuestionsScore", imageQuestionsScore);
@@ -114,30 +115,35 @@ public class MainActivity extends AppCompatActivity {
         editor.apply();
     }
 
-    //load and show sharedPrefImor
+    //load sharedPrefImor
     public void loadSharedPref() {
         imageQuestionsScore = sharedPref.getInt("imageQuestionsScore", 0);
         textQuestionsScore = sharedPref.getInt("textQuestionsScore", 0);
         soundQuestionsScore = sharedPref.getInt("soundQuestionsScore", 0);
         userName = sharedPref.getString("userName", getString(R.string.default_user_name));
-
+        userTotalScore = imageQuestionsScore + textQuestionsScore + soundQuestionsScore;
     }
 
+    //refresh all activity changing values
     public void refresh() {
-        TextView imageScore = (TextView) findViewById(image_score_counter);
-        imageScore.setText(String.valueOf(imageQuestionsScore));
+        TextView imageScoreTV = (TextView) findViewById(image_score_counter);
+        imageScoreTV.setText(String.valueOf(imageQuestionsScore));
 
-        TextView textScore = (TextView) findViewById(R.id.text_score_counter);
-        textScore.setText(String.valueOf(textQuestionsScore));
+        TextView textScoreTV = (TextView) findViewById(R.id.text_score_counter);
+        textScoreTV.setText(String.valueOf(textQuestionsScore));
 
-        TextView soundScore = (TextView) findViewById(sound_score_counter);
-        soundScore.setText(String.valueOf(soundQuestionsScore));
+        TextView soundScoreTV = (TextView) findViewById(sound_score_counter);
+        soundScoreTV.setText(String.valueOf(soundQuestionsScore));
+
+        TextView totalScoreTV = (TextView) findViewById(R.id.total_score_counter);
+        totalScoreTV.setText(String.valueOf(userTotalScore));
 
         if (!userName.equals("your_name")) {
             TextView userNameTextView = (TextView) findViewById(R.id.user_name);
             userNameTextView.setText(userName);
             TextView totalScoreTextView = (TextView) findViewById(R.id.total_score);
-            totalScoreTextView.setText(userName + getString(R.string.totalScoreText2));
+            String userNameTextMessage = userName + getString(R.string.totalScoreText2);
+            totalScoreTextView.setText(userNameTextMessage);
         }
     }
 
@@ -155,8 +161,8 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onResume() {
-
-
+        loadSharedPref();
+        refresh();
         super.onResume();
     }
 
@@ -166,17 +172,18 @@ public class MainActivity extends AppCompatActivity {
 
         // Set the content of the activity to use the activity_main.xml layout file
         setContentView(R.layout.activity_main);
-        sharedPref = MainActivity.this.getPreferences(Context.MODE_PRIVATE);
+
+        sharedPref = getSharedPreferences("com.example.ivos.quiz_app.pref1", MODE_PRIVATE);
 
         // change the hint Text in EditText View OnFocus and back
-        userNameTextView = (TextView) findViewById(user_name);
+        userNameTextView = (TextView) findViewById(R.id.user_name);
         if (!userName.equals("your_name")) userNameTextView.setText(userName);
 
         userNameTextView.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 if (hasFocus) {
-                    userNameTextView.setHint("write_here");
+                    userNameTextView.setHint("write_your_name");
                 } else {
                     userNameTextView.setHint("your_name");
                 }
@@ -190,8 +197,9 @@ public class MainActivity extends AppCompatActivity {
             public void afterTextChanged(Editable s) {
                 TextView totalScoreTextView = (TextView) findViewById(R.id.total_score);
                 userName = s.toString();
-                totalScoreTextView.setText(userName + getString(R.string.totalScoreText2));
-                userNameTextView.setTextColor(getResources().getColor(R.color.primary_dark_color));
+                String userNameTextMessage = userName + getString(R.string.totalScoreText2);
+                totalScoreTextView.setText(userNameTextMessage);
+                userNameTextView.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.primary_dark_color));
                 userNameTextView.setCursorVisible(false);
             }
 
@@ -207,15 +215,8 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        //back send scores from other activities by sending extras
-        Bundle extras = getIntent().getExtras();
 
-        if (extras != null) {
-            Toast.makeText(MainActivity.this, extras.getString("sendFrom"), Toast.LENGTH_SHORT).show();
 
-            //reload saved values set from SharedPreferences
-            loadSharedPref();
-            refresh();
 
             switch (extras.getString(getString(R.string.sendFrom)))  {
                 case "Image":
@@ -250,7 +251,7 @@ public class MainActivity extends AppCompatActivity {
             int totalScore = imageQuestionsScore + textQuestionsScore + soundQuestionsScore;
             TextView totalScoreView = (TextView) findViewById(R.id.total_score_counter);
             totalScoreView.setText(String.valueOf(totalScore));
-        }
+        }*/
 
         // Find the View that shows the images category
         TextView images = (TextView) findViewById(R.id.image_question_textbuton);
@@ -265,7 +266,7 @@ public class MainActivity extends AppCompatActivity {
                     //save score before start intent by Shared Preferences
                     saveSharedPref();
                     Intent imagesIntent = new Intent(MainActivity.this, ImagesActivity.class);
-                    imagesIntent.putExtra("textQuestionsScore", String.valueOf(textQuestionsScore));
+                    /*imagesIntent.putExtra("textQuestionsScore", String.valueOf(textQuestionsScore));*/
                     // Start the new activity
                     startActivity(imagesIntent);
                 }
@@ -286,8 +287,8 @@ public class MainActivity extends AppCompatActivity {
                     //save score before start intent by Shared Preferences
                     saveSharedPref();
                     Intent textsIntent = new Intent(MainActivity.this, TextsActivity.class);
-                    textsIntent.putExtra("textQuestionsScore", String.valueOf(textQuestionsScore));
-                    // Start the new activity
+                    /*textsIntent.putExtra("textQuestionsScore", String.valueOf(textQuestionsScore));
+                    // Start the new activity*/
                     startActivity(textsIntent);
                 }
             }
@@ -306,7 +307,7 @@ public class MainActivity extends AppCompatActivity {
                     //save score before start intent by Shared Preferences
                     saveSharedPref();
                     Intent soundsIntent = new Intent(MainActivity.this, SoundsActivity.class);
-                    soundsIntent.putExtra("soundQuestionsScore", String.valueOf(soundQuestionsScore));
+                   /* soundsIntent.putExtra("soundQuestionsScore", String.valueOf(soundQuestionsScore));*/
                     // Start the new activity
                     startActivity(soundsIntent);
                 }
