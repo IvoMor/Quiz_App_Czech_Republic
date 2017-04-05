@@ -43,6 +43,7 @@ public class TextsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.question_list);
 
+        // Initialize SharedPreferences
         sharedPref = getSharedPreferences("com.example.ivos.quiz_app.pref1", MODE_PRIVATE);
 
         // Create a list of questions
@@ -56,11 +57,6 @@ public class TextsActivity extends AppCompatActivity {
         questions.add(new Question("How tall is Sněžka, the highest peak in the Czech Republic?",
                 "1402 m a.s.l.", "1502 m a.s.l.", "1602 m a.s.l.", 3));
 
-        //save number of questions
-        /*SharedPreferences.Editor editor = sharedPref.edit();
-        editor.putInt("textQuestionsCount", questions.size());
-        editor.apply();*/
-
         // Create an {@link QuestionAdapter}, whose data source is a list of {@link Question}s. The
         // adapter knows how to create list items for each item in the list.
         QuestionAdapter adapter = new QuestionAdapter(this, questions, R.color.category_texts);
@@ -73,7 +69,6 @@ public class TextsActivity extends AppCompatActivity {
         // Make the {@link ListView} use the {@link QuestionAdapter} we created above, so that the
         // {@link ListView} will display list items for each {@link Question} in the list.
         listView.setAdapter(adapter);
-
 
         // Set a click listener to play the audio when the list item is clicked on
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -117,25 +112,34 @@ public class TextsActivity extends AppCompatActivity {
                 RelativeLayout container_list_item = (RelativeLayout) view.findViewById(R.id.container);
                 //if it is the right answer then colored text and background to blue else to red
                 if (checkButtonPosition == question.getqRightAnswerPosition()) {
+                    // Create and setup the {@link MediaPlayer} for the audio resource associated
+                    // with trueAnswer sound
+                   /* mMediaPlayer = MediaPlayer.create(ImagesActivity.this, R.raw.true_answer_sound);
+                    // Start the audio file
+                    mMediaPlayer.start();*/
+
                     checkButton.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.trueAnswer));
                     container_list_item.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.trueAnswerBackground));
                     setTitle("Text questions score = " + ++textQuestionScore + " / " + openQuestion.length );
                 } else {
                     // false answer
+
+                    // Create and setup the {@link MediaPlayer} for the audio resource associated
+                    // with trueAnswer sound
+                   /* mMediaPlayer = MediaPlayer.create(ImagesActivity.this, R.raw.false_answer_sound);
+                    // Start the audio file
+                    mMediaPlayer.start();*/
+
                     checkButton.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.falseAnswer));
                     container_list_item.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.falseAnswerBackground));
                 }
 
+                //disable radiobutton
                 for(int i = 0; i < answerRadioGroup.getChildCount(); i++){
                     (answerRadioGroup.getChildAt(i)).setEnabled(false);
                 }
 
-                // Create and setup the {@link MediaPlayer} for the audio resource
-                mMediaPlayer = MediaPlayer.create(TextsActivity.this, R.raw.family_grandfather);
-
-                // Start the audio file
-                mMediaPlayer.start();
-
+                //close this question
                 openQuestion[position] = false;
 
                 TextView submitButton = (TextView) view.findViewById(R.id.submit_button);

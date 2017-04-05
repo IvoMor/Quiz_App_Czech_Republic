@@ -1,6 +1,6 @@
 package com.example.ivos.quiz_app;
 
-import android.content.Intent;
+import android.content.SharedPreferences;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
@@ -11,6 +11,7 @@ import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -20,21 +21,28 @@ public class ImagesActivity extends AppCompatActivity {
     /** Handles playback of all the sound files */
     private MediaPlayer mMediaPlayer;
 
-    public int imageScore = 0;
+    public int imageQuestionScore = 0;
 
     public boolean[] openQuestion = {true, true, true, true};
 
+    SharedPreferences sharedPref = null;
+
     public void onBackPressed() {
-        Intent backIntent = new Intent(ImagesActivity.this, MainActivity.class);
-        backIntent.putExtra("imageQuestionsScore", String.valueOf(imageScore));
-        backIntent.putExtra("imageQuestionsCount", String.valueOf(openQuestion.length));
-        backIntent.putExtra("sendFrom", "Image");
-        startActivity(backIntent);
+        //save textScore to send back to parent
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putInt("imageQuestionsScore", imageQuestionScore);
+        editor.putBoolean("imageAnswered", true);
+        editor.apply();
+        super.onBackPressed();
     }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.question_list);
+
+        // Initialize SharedPreferences
+        sharedPref = getSharedPreferences("com.example.ivos.quiz_app.pref1", MODE_PRIVATE);
 
         // Create a list of image questions (second constructor)
         final ArrayList<Question> questions = new ArrayList<Question>();
@@ -46,7 +54,6 @@ public class ImagesActivity extends AppCompatActivity {
                 "Italy", "Germany", "France",R.drawable.flag, true,  2));
         questions.add(new Question("How tall is Sněžka, the highest peak in the Czech Republic?",
                 "1402 m a.s.l.", "1502 m a.s.l.", "1602 m a.s.l.",R.drawable.flag, true,  3));
-
 
         // Create an {@link QuestionAdapter}, whose data source is a list of {@link Question}s. The
         // adapter knows how to create list items for each item in the list.
@@ -104,26 +111,37 @@ public class ImagesActivity extends AppCompatActivity {
                 RelativeLayout container_list_item = (RelativeLayout) view.findViewById(R.id.container);
                 //if it is the right answer then colored text and background to blue else to red
                 if (checkButtonPosition == question.getqRightAnswerPosition()) {
+                    // Create and setup the {@link MediaPlayer} for the audio resource associated
+                    // with trueAnswer sound
+                   /* mMediaPlayer = MediaPlayer.create(ImagesActivity.this, R.raw.true_answer_sound);
+                    // Start the audio file
+                    mMediaPlayer.start();*/
+
                     checkButton.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.trueAnswer));
                     container_list_item.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.trueAnswerBackground));
-                    setTitle("Text questions score = " + ++imageScore + " / " + openQuestion.length );
+                    setTitle("Text questions score = " + ++imageQuestionScore + " / " + openQuestion.length );
                 } else {
                     // false answer
+
+                    // Create and setup the {@link MediaPlayer} for the audio resource associated
+                    // with trueAnswer sound
+                   /* mMediaPlayer = MediaPlayer.create(ImagesActivity.this, R.raw.false_answer_sound);
+                    // Start the audio file
+                    mMediaPlayer.start();*/
+
                     checkButton.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.falseAnswer));
                     container_list_item.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.falseAnswerBackground));
                 }
 
+                //disable radiobutton
                 for(int i = 0; i < answerRadioGroup.getChildCount(); i++){
                     (answerRadioGroup.getChildAt(i)).setEnabled(false);
                 }
+                //close this question
+                openQuestion[position] = false;
 
-
-                // Create and setup the {@link MediaPlayer} for the audio resource associated
-                // with the current question
-                mMediaPlayer = MediaPlayer.create(ImagesActivity.this, R.raw.family_grandfather);
-
-                // Start the audio file
-                mMediaPlayer.start();
+                TextView submitButton = (TextView) view.findViewById(R.id.submit_button);
+                submitButton.setVisibility(View.GONE);
             }
         });
     }
