@@ -35,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
     public int userTotalScore = 0;
 
     SharedPreferences sharedPref = null;
+    private boolean sharedPreferencesInicializedByDefault = false;
 
     private long backPressedTime = 0;
 
@@ -48,6 +49,7 @@ public class MainActivity extends AppCompatActivity {
     static final String SQS = "soundQuestionsScore";
     static final String SQC = "soundQuestionsCount";
     static final String SA = "soundAnswered";
+    static final String SPIBD = "sharedPreferencesInicializedByDefault";
 
     @Override
     public void onSaveInstanceState(Bundle savedInstanceState) {
@@ -62,7 +64,7 @@ public class MainActivity extends AppCompatActivity {
         savedInstanceState.putInt(SQS, soundQuestionsScore);
         savedInstanceState.putInt(SQC, soundQuestionsCount);
         savedInstanceState.putBoolean(SA, soundAnswered);
-
+        savedInstanceState.putBoolean(SPIBD, sharedPreferencesInicializedByDefault);
         // Always call the superclass so it can save the view hierarchy state
         super.onSaveInstanceState(savedInstanceState);
     }
@@ -82,27 +84,10 @@ public class MainActivity extends AppCompatActivity {
         soundQuestionsScore = savedInstanceState.getInt(SQS);
         soundQuestionsCount = savedInstanceState.getInt(SQC);
         soundAnswered = savedInstanceState.getBoolean(SA);
+        sharedPreferencesInicializedByDefault = savedInstanceState.getBoolean(SPIBD);
 
         // display data again
-
-        TextView imageScore = (TextView) findViewById(image_score_counter);
-        imageScore.setText(String.valueOf(imageQuestionsScore));
-
-        TextView textScore = (TextView) findViewById(R.id.text_score_counter);
-        textScore.setText(String.valueOf(textQuestionsScore));
-
-        TextView soundScore = (TextView) findViewById(sound_score_counter);
-        soundScore.setText(String.valueOf(soundQuestionsScore));
-
-        if (!userName.equals("your_name")) {
-            TextView totalScoreTextView = (TextView) findViewById(R.id.total_score);
-            String userNameTextMessage = userName + getString(R.string.totalScoreText2);
-            totalScoreTextView.setText(userNameTextMessage);
-        }
-
-        int totalScore = imageQuestionsScore + textQuestionsScore + soundQuestionsScore;
-        TextView totalScoreView = (TextView) findViewById(R.id.total_score_counter);
-        totalScoreView.setText(String.valueOf(totalScore));
+        refresh();
     }
 
     //save sharedPrefImor
@@ -111,6 +96,10 @@ public class MainActivity extends AppCompatActivity {
         editor.putInt("imageQuestionsScore", imageQuestionsScore);
         editor.putInt("textQuestionsScore", textQuestionsScore);
         editor.putInt("soundQuestionsScore", soundQuestionsScore);
+        editor.putBoolean("imageAnswered", imageAnswered);
+        editor.putBoolean("textAnswered", textAnswered);
+        editor.putBoolean("soundAnswered", soundAnswered);
+        editor.putBoolean("sharedPreferencesInicializedByDefault", sharedPreferencesInicializedByDefault);
         editor.putString("userName", userName);
         editor.apply();
     }
@@ -120,6 +109,10 @@ public class MainActivity extends AppCompatActivity {
         imageQuestionsScore = sharedPref.getInt("imageQuestionsScore", 0);
         textQuestionsScore = sharedPref.getInt("textQuestionsScore", 0);
         soundQuestionsScore = sharedPref.getInt("soundQuestionsScore", 0);
+        imageAnswered = sharedPref.getBoolean("imageAnswered", false);
+        textAnswered = sharedPref.getBoolean("textAnswered", false);
+        soundAnswered = sharedPref.getBoolean("soundAnswered", false);
+        sharedPreferencesInicializedByDefault = sharedPref.getBoolean("sharedPreferencesInicializedByDefault", false);
         userName = sharedPref.getString("userName", getString(R.string.default_user_name));
         userTotalScore = imageQuestionsScore + textQuestionsScore + soundQuestionsScore;
     }
@@ -166,6 +159,11 @@ public class MainActivity extends AppCompatActivity {
         super.onResume();
     }
 
+    //help debug tool
+    public void msg(String message) {
+        Toast.makeText(MainActivity.this, message, Toast.LENGTH_SHORT).show();
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -173,7 +171,17 @@ public class MainActivity extends AppCompatActivity {
         // Set the content of the activity to use the activity_main.xml layout file
         setContentView(R.layout.activity_main);
 
+        //set SharedPreferences nad if it is first time then set default values
         sharedPref = getSharedPreferences("com.example.ivos.quiz_app.pref1", MODE_PRIVATE);
+        if (!sharedPreferencesInicializedByDefault) {
+            SharedPreferences.Editor editor = sharedPref.edit();
+            editor.clear();
+            editor.apply();
+            //never more
+            loadSharedPref();
+            refresh();
+            sharedPreferencesInicializedByDefault = true;
+        }
 
         // change the hint Text in EditText View OnFocus and back
         userNameTextView = (TextView) findViewById(R.id.user_name);
@@ -183,15 +191,14 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 if (hasFocus) {
-                    userNameTextView.setHint("write_your_name");
+                    userNameTextView.setHint("write_your_name_now");
                 } else {
                     userNameTextView.setHint("your_name");
                 }
             }
         });
 
-        // change another TextView TeamAname2 with new TeamAname
-
+        // user's total score line handling after userName change
         userNameTextView.addTextChangedListener(new TextWatcher() {
             @Override
             public void afterTextChanged(Editable s) {
@@ -215,49 +222,11 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-
-
-
-            switch (extras.getString(getString(R.string.sendFrom)))  {
-                case "Image":
-                    imageQuestionsScore = Integer.valueOf(extras.getString("imageQuestionsScore"));
-                    imageQuestionsCount = Integer.valueOf(extras.getString("imageQuestionsCount"));
-                    //image answers done
-                    imageAnswered = true;
-                    break;
-                case "Text":
-                    textQuestionsScore = Integer.valueOf(extras.getString("textQuestionsScore"));
-                    textQuestionsCount = Integer.valueOf(extras.getString("textQuestionsCount"));
-                    //text answers done
-                    textAnswered = true;
-                    break;
-                case "Sound":
-                    soundQuestionsScore = Integer.valueOf(extras.getString("soundQuestionsScore"));
-                    soundQuestionsCount = Integer.valueOf(extras.getString("soundQuestionsCount"));
-                    //sound answers done
-                    soundAnswered = true;
-                    break;
-            }
-
-            TextView imageScore = (TextView) findViewById(image_score_counter);
-            imageScore.setText(String.valueOf(imageQuestionsScore));
-
-            TextView textScore = (TextView) findViewById(R.id.text_score_counter);
-            textScore.setText(String.valueOf(textQuestionsScore));
-
-            TextView soundScore = (TextView) findViewById(sound_score_counter);
-            soundScore.setText(String.valueOf(soundQuestionsScore));
-
-            int totalScore = imageQuestionsScore + textQuestionsScore + soundQuestionsScore;
-            TextView totalScoreView = (TextView) findViewById(R.id.total_score_counter);
-            totalScoreView.setText(String.valueOf(totalScore));
-        }*/
-
         // Find the View that shows the images category
         TextView images = (TextView) findViewById(R.id.image_question_textbuton);
 
         // Set a click listener on that View
-        images.setOnClickListener(new OnClickListener() {
+        images.setOnClickListener(new View.OnClickListener() {
             // The code in this method will be executed when the images category is clicked on.
             @Override
             public void onClick(View view) {
@@ -273,12 +242,11 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-
         // Find the View that shows the colors category
         TextView texts = (TextView) findViewById(R.id.text_question_textbuton);
 
         // Set a click listener on that View
-        texts.setOnClickListener(new OnClickListener() {
+        texts.setOnClickListener(new View.OnClickListener() {
             // The code in this method will be executed when the colors category is clicked on.
             @Override
             public void onClick(View view) {
@@ -298,7 +266,7 @@ public class MainActivity extends AppCompatActivity {
         TextView sound = (TextView) findViewById(R.id.sound_question_textbuton);
 
         // Set a click listener on that View
-        sound.setOnClickListener(new OnClickListener() {
+        sound.setOnClickListener(new View.OnClickListener() {
             // The code in this method will be executed when the phrases category is clicked on.
             @Override
             public void onClick(View view) {

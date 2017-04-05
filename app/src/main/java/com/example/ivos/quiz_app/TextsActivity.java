@@ -23,28 +23,18 @@ public class TextsActivity extends AppCompatActivity {
      */
     private MediaPlayer mMediaPlayer;
 
-    public int textScore = 0;
+    public int textQuestionScore = 0;
 
     public boolean[] openQuestion = {true, true, true, true};
 
     SharedPreferences sharedPref = null;
 
-    /*public void onBackPressed() {
-        Intent backIntent = new Intent(TextsActivity.this, MainActivity.class);
-        backIntent.putExtra("textQuestionsScore", String.valueOf(textScore));
-        backIntent.putExtra("textQuestionsCount", String.valueOf(openQuestion.length));
-        backIntent.putExtra("sendFrom", "Text");
-        startActivity(backIntent);
-    }*/
-
     public void onBackPressed() {
         //save textScore to send back to parent
         SharedPreferences.Editor editor = sharedPref.edit();
-        editor.putInt("textQuestionsScore", textScore);
+        editor.putInt("textQuestionsScore", textQuestionScore);
+        editor.putBoolean("textAnswered", true);
         editor.apply();
-
-        textScore = sharedPref.getInt("textQuestionsScore", 0);
-
         super.onBackPressed();
     }
 
@@ -67,9 +57,9 @@ public class TextsActivity extends AppCompatActivity {
                 "1402 m a.s.l.", "1502 m a.s.l.", "1602 m a.s.l.", 3));
 
         //save number of questions
-        SharedPreferences.Editor editor = sharedPref.edit();
+        /*SharedPreferences.Editor editor = sharedPref.edit();
         editor.putInt("textQuestionsCount", questions.size());
-        editor.apply();
+        editor.apply();*/
 
         // Create an {@link QuestionAdapter}, whose data source is a list of {@link Question}s. The
         // adapter knows how to create list items for each item in the list.
@@ -129,7 +119,7 @@ public class TextsActivity extends AppCompatActivity {
                 if (checkButtonPosition == question.getqRightAnswerPosition()) {
                     checkButton.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.trueAnswer));
                     container_list_item.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.trueAnswerBackground));
-                    setTitle("Text questions score = " + ++textScore + " / " + openQuestion.length );
+                    setTitle("Text questions score = " + ++textQuestionScore + " / " + openQuestion.length );
                 } else {
                     // false answer
                     checkButton.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.falseAnswer));
