@@ -59,7 +59,7 @@ public class TextsActivity extends AppCompatActivity {
 
         // Create an {@link QuestionAdapter}, whose data source is a list of {@link Question}s. The
         // adapter knows how to create list items for each item in the list.
-        QuestionAdapter adapter = new QuestionAdapter(this, questions, R.color.category_texts);
+        QuestionAdapter adapter = new QuestionAdapter(this, questions);
 
         // Find the {@link ListView} object in the view hierarchy of the {@link Activity}.
         // There should be a {@link ListView} with the view ID called list, which is declared in the
@@ -114,21 +114,19 @@ public class TextsActivity extends AppCompatActivity {
                 if (checkButtonPosition == question.getqRightAnswerPosition()) {
                     // Create and setup the {@link MediaPlayer} for the audio resource associated
                     // with trueAnswer sound
-                   /* mMediaPlayer = MediaPlayer.create(ImagesActivity.this, R.raw.true_answer_sound);
+                    mMediaPlayer = MediaPlayer.create(TextsActivity.this, R.raw.correct);
                     // Start the audio file
-                    mMediaPlayer.start();*/
+                    mMediaPlayer.start();
 
                     checkButton.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.trueAnswer));
                     container_list_item.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.trueAnswerBackground));
                     setTitle("Text questions score = " + ++textQuestionScore + " / " + openQuestion.length );
                 } else {
-                    // false answer
-
                     // Create and setup the {@link MediaPlayer} for the audio resource associated
-                    // with trueAnswer sound
-                   /* mMediaPlayer = MediaPlayer.create(ImagesActivity.this, R.raw.false_answer_sound);
+                    // with false answer
+                    mMediaPlayer = MediaPlayer.create(TextsActivity.this, R.raw.wrong);
                     // Start the audio file
-                    mMediaPlayer.start();*/
+                    mMediaPlayer.start();
 
                     checkButton.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.falseAnswer));
                     container_list_item.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.falseAnswerBackground));

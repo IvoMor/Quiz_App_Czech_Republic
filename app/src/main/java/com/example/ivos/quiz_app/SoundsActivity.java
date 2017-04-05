@@ -12,7 +12,6 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -46,18 +45,18 @@ public class SoundsActivity extends AppCompatActivity {
 
         // Create a list of questions (second constructor)
         final ArrayList<Question> questions = new ArrayList<Question>();
-        questions.add(new Question("What is the city with second largest population in Czech Republic?",
-                "Brno", "Plzeň (Pilsen)", "Praha", R.raw.family_grandfather, false, 1));
-        questions.add(new Question("Who was Czech Republic’s first president?",
-                "Alexander Dubceck", "Vaclav Havel", "Ludvik Svoboda", R.raw.family_grandfather, false,  2));
+        questions.add(new Question("What's the name of most known symphonic poem by Bedrich Smetana? (Same as the longest Czech river)",
+                "Vltava", "Labe", "Morava", R.raw.vltava, false, 1));
+        questions.add(new Question("What's the favourite sport in Czech Republic? (check the sound from game)",
+                "Football", "Tennis", "Ice hockey", R.raw.hockey, false,  2));
         questions.add(new Question("Which country is to the west of Czech Republic?",
-                "Italy", "Germany", "France", R.raw.family_grandfather, false,  2));
+                "Italy", "Germany", "France", R.raw.color_black, false,  2));
         questions.add(new Question("How tall is Sněžka, the highest peak in the Czech Republic?",
-                "1402 m a.s.l.", "1502 m a.s.l.", "1602 m a.s.l.", R.raw.family_grandfather, false,  3));
+                "1402 m a.s.l.", "1502 m a.s.l.", "1602 m a.s.l.", R.raw.color_black, false,  3));
 
         // Create an {@link QuestionAdapter}, whose data source is a list of {@link Question}s. The
         // adapter knows how to create list items for each item in the list.
-        QuestionAdapter adapter = new QuestionAdapter(this, questions, R.color.category_sounds);
+        QuestionAdapter adapter = new QuestionAdapter(this, questions);
 
         // Find the {@link ListView} object in the view hierarchy of the {@link Activity}.
         // There should be a {@link ListView} with the view ID called list, which is declared in the
@@ -77,10 +76,27 @@ public class SoundsActivity extends AppCompatActivity {
                 if (!openQuestion[position]) return;
 
                 // Get the {@link Question} object at the given position the user clicked on
-                Question question = questions.get(position);
+                final Question question = questions.get(position);
 
+                //ImageView imageView2 = (ImageView) findViewById(R.id.image2);
+                //imageView2.setFocusable(true);
+
+                /*imageView2.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        // Create and setup the {@link MediaPlayer} for the audio resource associated
+                        // with current question sound
+                        mMediaPlayer = MediaPlayer.create(SoundsActivity.this, question.getAudioResourceId());
+                        // Start the audio file
+                        mMediaPlayer.start();
+                    }
+                });*/
                 // debugging tools
-                Toast.makeText(SoundsActivity.this, "Click", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(SoundsActivity.this, "Click", Toast.LENGTH_SHORT).show();
+
+                mMediaPlayer = MediaPlayer.create(SoundsActivity.this, question.getAudioResourceId());
+                // Start the audio file
+                if (!mMediaPlayer.isPlaying()) mMediaPlayer.start();
 
                 // get the radioGroup
                 RadioGroup answerRadioGroup = (RadioGroup) view.findViewById(R.id.answer_radio_group);
@@ -112,9 +128,9 @@ public class SoundsActivity extends AppCompatActivity {
                 if (checkButtonPosition == question.getqRightAnswerPosition()) {
                     // Create and setup the {@link MediaPlayer} for the audio resource associated
                     // with trueAnswer sound
-                   /* mMediaPlayer = MediaPlayer.create(ImagesActivity.this, R.raw.true_answer_sound);
+                    mMediaPlayer = MediaPlayer.create(SoundsActivity.this, R.raw.correct);
                     // Start the audio file
-                    mMediaPlayer.start();*/
+                    mMediaPlayer.start();
 
                     checkButton.setTextColor(getResources().getColor(R.color.trueAnswer));
                     container_list_item.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.trueAnswerBackground));
@@ -124,9 +140,9 @@ public class SoundsActivity extends AppCompatActivity {
 
                     // Create and setup the {@link MediaPlayer} for the audio resource associated
                     // with trueAnswer sound
-                   /* mMediaPlayer = MediaPlayer.create(ImagesActivity.this, R.raw.false_answer_sound);
+                    mMediaPlayer = MediaPlayer.create(SoundsActivity.this, R.raw.wrong);
                     // Start the audio file
-                    mMediaPlayer.start();*/
+                    mMediaPlayer.start();
 
                     checkButton.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.falseAnswer));
                     container_list_item.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.falseAnswerBackground));
@@ -138,6 +154,9 @@ public class SoundsActivity extends AppCompatActivity {
                 }
                 //close this question
                 openQuestion[position] = false;
+
+                mMediaPlayer.stop();
+                mMediaPlayer.reset();
 
                 TextView submitButton = (TextView) view.findViewById(R.id.submit_button);
                 submitButton.setVisibility(View.GONE);

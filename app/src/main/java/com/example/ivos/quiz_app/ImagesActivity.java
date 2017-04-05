@@ -12,7 +12,6 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -46,18 +45,18 @@ public class ImagesActivity extends AppCompatActivity {
 
         // Create a list of image questions (second constructor)
         final ArrayList<Question> questions = new ArrayList<Question>();
-        questions.add(new Question("What is the city with second largest population in Czech Republic?",
-                "Brno", "Plzeň (Pilsen)", "Praha",R.drawable.flag, true, 1));
-        questions.add(new Question("Who was Czech Republic’s first president?",
-                "Alexander Dubceck", "Vaclav Havel", "Ludvik Svoboda",R.drawable.flag, true,  2));
-        questions.add(new Question("Which country is to the west of Czech Republic?",
-                "Italy", "Germany", "France",R.drawable.flag, true,  2));
-        questions.add(new Question("How tall is Sněžka, the highest peak in the Czech Republic?",
-                "1402 m a.s.l.", "1502 m a.s.l.", "1602 m a.s.l.",R.drawable.flag, true,  3));
+        questions.add(new Question("Which one is Czech Republic neighboring country flag?",
+                "Norway", "Denmark", "Poland",R.drawable.poland_flag, true, 3));
+        questions.add(new Question("Do you know what is Czech favourite drink?",
+                "Beer", "Coca-cola", "Mineral water",R.drawable.beer, true,  1));
+        questions.add(new Question("Which one is the Czech famous automotive brand?",
+                "Renault", "Audi", "Skoda",R.drawable.skoda, true,  3));
+        questions.add(new Question("Who is on the picture? Most known Czech king and Holy Roman Emperor.",
+                "Frederick I Barbarossa", "Carl IV", "Charles the Great",R.drawable.karel4, true,  2));
 
         // Create an {@link QuestionAdapter}, whose data source is a list of {@link Question}s. The
         // adapter knows how to create list items for each item in the list.
-        QuestionAdapter adapter = new QuestionAdapter(this, questions, R.color.category_images);
+        QuestionAdapter adapter = new QuestionAdapter(this, questions);
 
         // Find the {@link ListView} object in the view hierarchy of the {@link Activity}.
         // There should be a {@link ListView} with the view ID called list, which is declared in the
@@ -80,7 +79,7 @@ public class ImagesActivity extends AppCompatActivity {
                 Question question = questions.get(position);
 
                 // debugging tools
-                Toast.makeText(ImagesActivity.this, "Click", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(ImagesActivity.this, "Click", Toast.LENGTH_SHORT).show();
 
                 // get the radioGroup
                 RadioGroup answerRadioGroup = (RadioGroup) view.findViewById(R.id.answer_radio_group);
@@ -113,9 +112,9 @@ public class ImagesActivity extends AppCompatActivity {
                 if (checkButtonPosition == question.getqRightAnswerPosition()) {
                     // Create and setup the {@link MediaPlayer} for the audio resource associated
                     // with trueAnswer sound
-                   /* mMediaPlayer = MediaPlayer.create(ImagesActivity.this, R.raw.true_answer_sound);
+                    mMediaPlayer = MediaPlayer.create(ImagesActivity.this, R.raw.correct);
                     // Start the audio file
-                    mMediaPlayer.start();*/
+                    mMediaPlayer.start();
 
                     checkButton.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.trueAnswer));
                     container_list_item.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.trueAnswerBackground));
@@ -125,9 +124,9 @@ public class ImagesActivity extends AppCompatActivity {
 
                     // Create and setup the {@link MediaPlayer} for the audio resource associated
                     // with trueAnswer sound
-                   /* mMediaPlayer = MediaPlayer.create(ImagesActivity.this, R.raw.false_answer_sound);
+                    mMediaPlayer = MediaPlayer.create(ImagesActivity.this, R.raw.wrong);
                     // Start the audio file
-                    mMediaPlayer.start();*/
+                    mMediaPlayer.start();
 
                     checkButton.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.falseAnswer));
                     container_list_item.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.falseAnswerBackground));

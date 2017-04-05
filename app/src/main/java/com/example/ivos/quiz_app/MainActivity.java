@@ -11,8 +11,6 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import static com.example.ivos.quiz_app.R.id.image_score_counter;
-import static com.example.ivos.quiz_app.R.id.sound_score_counter;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -35,7 +33,6 @@ public class MainActivity extends AppCompatActivity {
     public int userTotalScore = 0;
 
     SharedPreferences sharedPref = null;
-    private boolean sharedPreferencesInicializedByDefault = false;
 
     private long backPressedTime = 0;
 
@@ -49,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
     static final String SQS = "soundQuestionsScore";
     static final String SQC = "soundQuestionsCount";
     static final String SA = "soundAnswered";
-    static final String SPIBD = "sharedPreferencesInicializedByDefault";
+
 
     @Override
     public void onSaveInstanceState(Bundle savedInstanceState) {
@@ -64,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
         savedInstanceState.putInt(SQS, soundQuestionsScore);
         savedInstanceState.putInt(SQC, soundQuestionsCount);
         savedInstanceState.putBoolean(SA, soundAnswered);
-        savedInstanceState.putBoolean(SPIBD, sharedPreferencesInicializedByDefault);
+
         // Always call the superclass so it can save the view hierarchy state
         super.onSaveInstanceState(savedInstanceState);
     }
@@ -84,7 +81,6 @@ public class MainActivity extends AppCompatActivity {
         soundQuestionsScore = savedInstanceState.getInt(SQS);
         soundQuestionsCount = savedInstanceState.getInt(SQC);
         soundAnswered = savedInstanceState.getBoolean(SA);
-        sharedPreferencesInicializedByDefault = savedInstanceState.getBoolean(SPIBD);
 
         // display data again
         refresh();
@@ -99,7 +95,6 @@ public class MainActivity extends AppCompatActivity {
         editor.putBoolean("imageAnswered", imageAnswered);
         editor.putBoolean("textAnswered", textAnswered);
         editor.putBoolean("soundAnswered", soundAnswered);
-        editor.putBoolean("sharedPreferencesInicializedByDefault", sharedPreferencesInicializedByDefault);
         editor.putString("userName", userName);
         editor.apply();
     }
@@ -112,20 +107,19 @@ public class MainActivity extends AppCompatActivity {
         imageAnswered = sharedPref.getBoolean("imageAnswered", false);
         textAnswered = sharedPref.getBoolean("textAnswered", false);
         soundAnswered = sharedPref.getBoolean("soundAnswered", false);
-        sharedPreferencesInicializedByDefault = sharedPref.getBoolean("sharedPreferencesInicializedByDefault", false);
         userName = sharedPref.getString("userName", getString(R.string.default_user_name));
         userTotalScore = imageQuestionsScore + textQuestionsScore + soundQuestionsScore;
     }
 
     //refresh all activity changing values
     public void refresh() {
-        TextView imageScoreTV = (TextView) findViewById(image_score_counter);
+        TextView imageScoreTV = (TextView) findViewById(R.id.image_score_counter);
         imageScoreTV.setText(String.valueOf(imageQuestionsScore));
 
         TextView textScoreTV = (TextView) findViewById(R.id.text_score_counter);
         textScoreTV.setText(String.valueOf(textQuestionsScore));
 
-        TextView soundScoreTV = (TextView) findViewById(sound_score_counter);
+        TextView soundScoreTV = (TextView) findViewById(R.id.sound_score_counter);
         soundScoreTV.setText(String.valueOf(soundQuestionsScore));
 
         TextView totalScoreTV = (TextView) findViewById(R.id.total_score_counter);
@@ -154,9 +148,9 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onResume() {
+        super.onResume();
         loadSharedPref();
         refresh();
-        super.onResume();
     }
 
     //help debug tool
@@ -173,14 +167,12 @@ public class MainActivity extends AppCompatActivity {
 
         //set SharedPreferences nad if it is first time then set default values
         sharedPref = getSharedPreferences("com.example.ivos.quiz_app.pref1", MODE_PRIVATE);
-        if (!sharedPreferencesInicializedByDefault) {
-            SharedPreferences.Editor editor = sharedPref.edit();
-            editor.clear();
-            editor.apply();
-            //never more
-            loadSharedPref();
-            refresh();
-            sharedPreferencesInicializedByDefault = true;
+        if (savedInstanceState == null) {
+                SharedPreferences.Editor editor = sharedPref.edit();
+                editor.clear();
+                editor.apply();
+                loadSharedPref();
+                refresh();
         }
 
         // change the hint Text in EditText View OnFocus and back

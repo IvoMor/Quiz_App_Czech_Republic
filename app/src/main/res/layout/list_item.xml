@@ -47,8 +47,10 @@
 
     <ImageView
         android:id="@+id/image"
-        android:layout_width="@dimen/question_image_width"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:maxHeight="@dimen/question_image_height"
+        android:maxWidth="@dimen/question_image_width"
         android:layout_below="@+id/question_textview_konteirner"
         android:layout_gravity="center_horizontal"
         android:layout_margin="@dimen/small_margin"

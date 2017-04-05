@@ -19,18 +19,17 @@ import java.util.ArrayList;
 public class QuestionAdapter extends ArrayAdapter<Question> {
 
     /** Resource ID for the background color for this list of words */
-    private int mColorResourceId;
+    //private int mColorResourceId;
 
     /**
      * Create a new {@link QuestionAdapter} object.
      *
      * @param context is the current context (i.e. Activity) that the adapter is being created in.
      * @param questions is the list of {@link Question}s to be displayed.
-     * @param colorResourceId is the resource ID for the background color for this list of questions Todo
+
      */
-    public QuestionAdapter(Context context, ArrayList<Question> questions, int colorResourceId) {
+    public QuestionAdapter(Context context, ArrayList<Question> questions) {
         super(context, 0, questions);
-        mColorResourceId = colorResourceId;
     }
 
     @Override
@@ -67,23 +66,29 @@ public class QuestionAdapter extends ArrayAdapter<Question> {
 
         // Find the ImageView in the list_item.xml layout with the ID image.
         ImageView imageView = (ImageView) listItemView.findViewById(R.id.image);
-        // Check if an image is provided for this word or not                                       Todo Audio condition
+        // Check if an image is provided for this word or not
         if (currentQuestion.hasImage()) {
             // If an image is available, display the provided image based on the resource ID
             imageView.setImageResource(currentQuestion.getImageResourceId());
             // Make sure the view is visible
             imageView.setVisibility(View.VISIBLE);
         } else {
-            // Otherwise hide the ImageView (set visibility to GONE)                                ToDO set image as plaz button and set it clickable for playing sound
-            imageView.setVisibility(View.GONE);
+            if (currentQuestion.getIsText()) {
+                // Otherwise hide the ImageView (set visibility to GONE)
+                imageView.setVisibility(View.GONE);
+            } else {
+                imageView.setVisibility(View.GONE);
+                ImageView imageView2 = (ImageView) listItemView.findViewById(R.id.image2);
+                imageView2.setImageResource(R.drawable.play_button);
+                imageView2.setVisibility(View.VISIBLE);
+            }
         }
 
         // Set the theme color for the list item
         View textContainer = listItemView.findViewById(R.id.container);
-        // Find the color that the resource ID maps to
-        int color = ContextCompat.getColor(getContext(), mColorResourceId);
+
         // Set the background color of the text container View
-        textContainer.setBackgroundColor(color);
+        textContainer.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.tan_background));
 
         // Return the whole list item layout
         // the ListView.

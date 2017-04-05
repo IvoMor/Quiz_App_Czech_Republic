@@ -38,6 +38,9 @@ public class Question {
     /** Image resource ID for the question */
     private boolean qIsImageId;
 
+    /** Image resource ID for the question */
+    private boolean qIsText = false;
+
     /**
      * Create a new Question object - text type.
      *
@@ -53,6 +56,7 @@ public class Question {
         qAnswerText2 = answerText2;
         qAnswerText3 = answerText3;
         qRightAnswerPosition = rightAnswerPosition;
+        qIsText = true;
     }
 
     /**
@@ -115,6 +119,10 @@ public class Question {
     public int getImageResourceId() {
         return qImageResourceId;
     }
+
+
+    /** Image resource ID for the question */
+    public boolean getIsText() {return qIsText;}
 
     /**
      * Returns whether or not there is an image for this question.
