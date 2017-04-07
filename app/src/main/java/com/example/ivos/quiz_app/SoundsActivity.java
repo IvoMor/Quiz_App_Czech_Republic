@@ -13,6 +13,7 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -25,10 +26,23 @@ public class SoundsActivity extends AppCompatActivity {
     public int soundQuestionScore = 0;
     /** open question checker (not answered)*/
     public boolean[] openQuestion = {true, true, true, true};
+    // closed question counter
+    public int closedQuestionCounter = 0;
     //initialization SharedPreferences
     SharedPreferences sharedPref = null;
+
+    private long backPressedTime = 0;
     //back button handling - sending score value
     public void onBackPressed() {
+        long t = System.currentTimeMillis();
+        if (t - backPressedTime > 2000) {    // 2 secs
+            backPressedTime = t;
+            Toast.makeText(this, R.string.Press_back_again_to_exit,Toast.LENGTH_SHORT).show();
+            return;
+        } else {    // this guy is serious
+            // clean up
+            super.onBackPressed();       // bye
+        }
         //save textScore to send back to parent
         SharedPreferences.Editor editor = sharedPref.edit();
         editor.putInt("soundQuestionsScore", soundQuestionScore);
@@ -61,11 +75,11 @@ public class SoundsActivity extends AppCompatActivity {
                 "Vltava", "Labe", "Morava", R.raw.vltava, false, 1));
         questions.add(new Question("What's the favourite sport in Czech Republic? " +
                 "(check the sound from game)",
-                "Football", "Tennis", "Ice hockey", R.raw.hockey, false,  2));
-        questions.add(new Question("Which country is to the west of Czech Republic?",
-                "Italy", "Germany", "France", R.raw.color_black, false,  2));
-        questions.add(new Question("How tall is Sněžka, the highest peak in the Czech Republic?",
-                "1402 m a.s.l.", "1502 m a.s.l.", "1602 m a.s.l.", R.raw.color_black, false,  3));
+                "Football", "Tennis", "Ice hockey", R.raw.hockey, false,  3));
+        questions.add(new Question("What do you hear?",
+                "Waterfall", "Pouring beer", "Penguin run", R.raw.pivo, false,  2));
+        questions.add(new Question("Foreigner's most hated letter of Czech alphabet?",
+                "Ř", "Č", "Š", R.raw.rz, false,  1));
 
         // Create an {@link QuestionAdapter}, whose data source is a list of {@link Question}s. The
         // adapter knows how to create list items for each item in the list.
@@ -78,7 +92,7 @@ public class SoundsActivity extends AppCompatActivity {
         // {@link ListView} will display list items for each {@link Question} in the list.
         listView.setAdapter(adapter);
         // Set a click listener to play the audio when the list item is clicked on
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {                         //TODO doesn't work
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
@@ -145,6 +159,7 @@ public class SoundsActivity extends AppCompatActivity {
                 }
                 //close this question
                 openQuestion[position] = false;
+                closedQuestionCounter++;
                 //stop playing
                 mQuestionMediaPlayer.stop();
                 mQuestionMediaPlayer.reset();
@@ -154,6 +169,9 @@ public class SoundsActivity extends AppCompatActivity {
                 //disable horizontal line
                 TextView horizontalLine2 = (TextView) view.findViewById(R.id.horizontal_line2_textview);
                 horizontalLine2.setVisibility(View.GONE);
+                if (closedQuestionCounter == openQuestion.length) {
+                    Toast.makeText(SoundsActivity.this,"Last question answered. Go back.",Toast.LENGTH_LONG).show();
+                }
             }
         });
     }

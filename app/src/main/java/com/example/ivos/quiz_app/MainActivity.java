@@ -16,7 +16,7 @@ public class MainActivity extends AppCompatActivity {
 
     //initialization
     private TextView userNameTextView = null;
-    public String userName = "your_name";
+    public String userName = "Guest";
 
     public int imageQuestionsScore = 0;
     public boolean imageCategoryClosed = false;
@@ -124,7 +124,7 @@ public class MainActivity extends AppCompatActivity {
         TextView highScoreTV = (TextView) findViewById(R.id.high_score_counter);
         highScoreTV.setText(String.valueOf(userHighScore));
 
-        if (!userName.equals("your_name")) {
+        if (!userName.equals("Guest")) {
             TextView userNameTextView = (TextView) findViewById(R.id.user_name);
             userNameTextView.setText(userName);
             TextView totalScoreTextView = (TextView) findViewById(R.id.total_score);
@@ -145,7 +145,7 @@ public class MainActivity extends AppCompatActivity {
         long t = System.currentTimeMillis();
         if (t - backPressedTime > 2000) {    // 2 secs
             backPressedTime = t;
-            Toast.makeText(this, "Press back again to exit",Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.Press_back_again_to_exit,Toast.LENGTH_SHORT).show();
         } else {    // this guy is serious
             // clean up
             super.onBackPressed();       // bye
@@ -156,17 +156,21 @@ public class MainActivity extends AppCompatActivity {
         if (userHighScore < userTotalScore()) {
             userHighScore = userTotalScore();
             //new high score message
-            Toast.makeText(MainActivity.this, "Congrats to new high score " + userName, Toast.LENGTH_LONG).show(); //Todo sound> highscore
+            Toast.makeText(MainActivity.this, "Congrats " + userName + ". It's a new high score." , Toast.LENGTH_LONG).show();
         } else {
-            Toast.makeText(MainActivity.this, "Not bad - you have" + String.valueOf(userTotalScore()) + " points, but try again. " + userName, Toast.LENGTH_LONG).show(); //Todo sound> Not bad, but try again
+            Toast.makeText(MainActivity.this, "Not bad " + userName + ". You have" + String.valueOf(userTotalScore()) + " points.", Toast.LENGTH_LONG).show();
         }
-        //renew quiz but high score stays
+        //renew quiz but high score and user stay
+        Toast.makeText(MainActivity.this, "So " + userName + " try again?" , Toast.LENGTH_LONG).show();
         int saveUserHighScore = userHighScore;
+        String saveUserName = userName;
         clearQuiz();
         SharedPreferences.Editor editor = sharedPref.edit();
         editor.putInt("userHighScore", saveUserHighScore);
+        editor.putString("userName",saveUserName);
         editor.apply();
         userHighScore = saveUserHighScore;
+        userName = saveUserName;
     }
 
     //when come back from intent
@@ -194,14 +198,14 @@ public class MainActivity extends AppCompatActivity {
 
         // change the hint Text in EditText View OnFocus and back
         userNameTextView = (TextView) findViewById(R.id.user_name);
-        if (!userName.equals("your_name")) userNameTextView.setText(userName);
+        if (!userName.equals("Guest")) userNameTextView.setText(userName);
         userNameTextView.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 if (hasFocus) {
-                    userNameTextView.setHint("write_your_name_now");
+                    userNameTextView.setHint(getString(R.string.name_request));
                 } else {
-                    userNameTextView.setHint("your_name");
+                    userNameTextView.setHint("Guest");
                 }
             }
         });

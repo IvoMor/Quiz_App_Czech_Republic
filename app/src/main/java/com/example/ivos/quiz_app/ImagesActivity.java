@@ -13,6 +13,7 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -24,10 +25,23 @@ public class ImagesActivity extends AppCompatActivity {
     public int imageQuestionScore = 0;
     // open question checker (not answered)*/
     public boolean[] openQuestion = {true, true, true, true};
+    // closed question counter
+    public int closedQuestionCounter = 0;
     //initialization SharedPreferences
     SharedPreferences sharedPref = null;
+
+    private long backPressedTime = 0;
     //back button handling - sending score value
     public void onBackPressed() {
+        long t = System.currentTimeMillis();
+        if (t - backPressedTime > 2000) {    // 2 secs
+            backPressedTime = t;
+            Toast.makeText(this, R.string.Press_back_again_to_exit,Toast.LENGTH_SHORT).show();
+            return;
+        } else {    // this guy is serious
+            // clean up
+            super.onBackPressed();       // bye
+        }
         //save textScore to send back to parent
         SharedPreferences.Editor editor = sharedPref.edit();
         editor.putInt("imageQuestionsScore", imageQuestionScore);
@@ -35,6 +49,7 @@ public class ImagesActivity extends AppCompatActivity {
         editor.apply();
         super.onBackPressed();
     }
+
 
     @Override
     //back button on action bar handling by redirect to onBackPressed()
@@ -82,8 +97,6 @@ public class ImagesActivity extends AppCompatActivity {
                 if (!openQuestion[position]) return;
                 // Get the {@link Question} object at the given position the user clicked on
                 Question question = questions.get(position);
-                // debugging tools
-                //Toast.makeText(ImagesActivity.this, "Click", Toast.LENGTH_SHORT).show();
                 // get the radioGroup
                 RadioGroup answerRadioGroup = (RadioGroup) view.findViewById(R.id.answer_radio_group);
                 // save id of checked button
@@ -132,12 +145,13 @@ public class ImagesActivity extends AppCompatActivity {
                     container_list_item.setBackgroundColor(ContextCompat.getColor(
                             getApplicationContext(), R.color.falseAnswerBackground));
                 }
-                //disable radiobutton
+                //disable radio button
                 for(int i = 0; i < answerRadioGroup.getChildCount(); i++){
                     (answerRadioGroup.getChildAt(i)).setEnabled(false);
                 }
                 //close this question
                 openQuestion[position] = false;
+                closedQuestionCounter++;
                 //disable hints
                 TextView submitButton = (TextView) view.findViewById(R.id.submit_button);
                 submitButton.setVisibility(View.GONE);
@@ -145,6 +159,9 @@ public class ImagesActivity extends AppCompatActivity {
                 TextView horizontalLine2 =
                         (TextView) view.findViewById(R.id.horizontal_line2_textview);
                 horizontalLine2.setVisibility(View.GONE);
+                if (closedQuestionCounter == openQuestion.length) {
+                    Toast.makeText(ImagesActivity.this,"Last question answered. Go back.",Toast.LENGTH_LONG).show();
+                }
             }
         });
     }

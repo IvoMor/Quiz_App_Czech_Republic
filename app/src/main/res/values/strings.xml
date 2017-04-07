@@ -9,7 +9,7 @@
     <string name="Text_questions">Text questions</string>
 
     <!-- Category name for sound question quiz  -->
-    <string name="Sound_questions">Sound questions</string>
+    <string name="Sound_questions">Audio questions</string>
 
     <!-- Total_score text  -->
     <string name="Total_score">Total score:</string>
@@ -17,31 +17,42 @@
     <!-- High_score text  -->
     <string name="High_score">High score:</string>
 
-    <!-- slected language  -->
+    <!-- selected language  -->
     <string name="cz_en">CZ(en)</string>
 
-    <!-- slected language  -->
+    <!-- selected language  -->
     <string name="en_cz">EN(cz)</string>
 
+    <!-- initialization string value  -->
     <string name="nothing">Nothing_else</string>
 
+    <!--initialization int value-->
+    <string name="init_zero">0</string>
+
     <!-- name enter hint  -->
-    <string name="name_request">Your_name_here</string>
+    <string name="name_request">type your name now</string>
 
     <!--submit_answer_button_text for image and text question-->
-    <string name="submit_answer_button_text">Hint: Choose your answer than touch whatever for submit. (Don\'t have another chance)</string>
+    <string name="submit_answer_button_text">Hint: Choose your answer than touch whatever for submit. (One try only.)</string>
 
     <!--submit_answer_button_text for sound question-->
-    <string name="submit_answer_button_text_sound">Hint: Touch whatever for play sound. Choose your answer than touch whatever for submit. (Don\'t have another chance)</string>
+    <string name="submit_answer_button_text_sound">Hint: Touch whatever for play sound. Choose your answer and touch whatever for submit. (One try only.)</string>
 
     <!--defaultUserName-->
-    <string name="default_user_name">your_name</string>
+    <string name="default_user_name">Guest</string>
 
     <!--totalScoreText2-->
     <string name="totalScoreText2">\'s score:</string>
 
     <!--sendFrom-->
     <string name="sendFrom">sendFrom</string>
-    <string name="init_zero">0</string>
+
+    <!--score text-->
     <string name="score">Score</string>
+
+    <!--Main_background_image_Czech_Flag contain description-->
+    <string name="Main_background_image_Czech_Flag">Main_background_image_Czech_Flag</string>
+
+    <!--Toast message text-->
+    <string name="Press_back_again_to_exit">Press back again to exit</string>
 </resources>
