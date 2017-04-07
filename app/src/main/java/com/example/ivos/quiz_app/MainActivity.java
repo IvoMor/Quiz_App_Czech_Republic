@@ -19,18 +19,19 @@ public class MainActivity extends AppCompatActivity {
     public String userName = "your_name";
 
     public int imageQuestionsScore = 0;
-    public int imageQuestionsCount = 0;
-    public boolean imageAnswered = false;
+    public boolean imageCategoryClosed = false;
 
     public int textQuestionsScore = 0;
-    public int textQuestionsCount = 0;
-    public boolean textAnswered = false;
+    public boolean textCategoryClosed = false;
 
     public int soundQuestionsScore = 0;
-    public int soundQuestionsCount = 0;
-    public boolean soundAnswered = false;
+    public boolean soundCategoryClosed = false;
 
-    public int userTotalScore = 0;
+    public int userTotalScore() {
+        return imageQuestionsScore + textQuestionsScore + soundQuestionsScore;
+    }
+
+    public int userHighScore = 0;
 
     SharedPreferences sharedPref = null;
 
@@ -38,14 +39,12 @@ public class MainActivity extends AppCompatActivity {
 
     static final String UN = "userName";
     static final String IQS = "imageQuestionsScore";
-    static final String IQC = "imageQuestionsCount";
-    static final String IA = "imageAnswered";
+    static final String IA = "imageCategoryClosed";
     static final String TQS = "textQuestionsScore";
-    static final String TQC = "textQuestionsCount";
-    static final String TA = "textAnswered";
+    static final String TA = "textCategoryClosed";
     static final String SQS = "soundQuestionsScore";
-    static final String SQC = "soundQuestionsCount";
-    static final String SA = "soundAnswered";
+    static final String SA = "soundCategoryClosed";
+    static final String UHS = "userHighScore";
 
 
     @Override
@@ -53,14 +52,12 @@ public class MainActivity extends AppCompatActivity {
         // Save the user's current game state
         savedInstanceState.putString(UN, userName);
         savedInstanceState.putInt(IQS, imageQuestionsScore);
-        savedInstanceState.putInt(IQC, imageQuestionsCount);
-        savedInstanceState.putBoolean(IA, imageAnswered);
+        savedInstanceState.putBoolean(IA, imageCategoryClosed);
         savedInstanceState.putInt(TQS, textQuestionsScore);
-        savedInstanceState.putInt(TQC, textQuestionsCount);
-        savedInstanceState.putBoolean(TA, textAnswered);
+        savedInstanceState.putBoolean(TA, textCategoryClosed);
         savedInstanceState.putInt(SQS, soundQuestionsScore);
-        savedInstanceState.putInt(SQC, soundQuestionsCount);
-        savedInstanceState.putBoolean(SA, soundAnswered);
+        savedInstanceState.putBoolean(SA, soundCategoryClosed);
+        savedInstanceState.putInt(UHS, userHighScore);
 
         // Always call the superclass so it can save the view hierarchy state
         super.onSaveInstanceState(savedInstanceState);
@@ -73,14 +70,12 @@ public class MainActivity extends AppCompatActivity {
         // Restore state members from saved instance
         userName = savedInstanceState.getString(UN);
         imageQuestionsScore = savedInstanceState.getInt(IQS);
-        imageQuestionsCount = savedInstanceState.getInt(IQC);
-        imageAnswered = savedInstanceState.getBoolean(IA);
+        imageCategoryClosed = savedInstanceState.getBoolean(IA);
         textQuestionsScore = savedInstanceState.getInt(TQS);
-        textQuestionsCount = savedInstanceState.getInt(TQC);
-        textAnswered = savedInstanceState.getBoolean(TA);
+        textCategoryClosed = savedInstanceState.getBoolean(TA);
         soundQuestionsScore = savedInstanceState.getInt(SQS);
-        soundQuestionsCount = savedInstanceState.getInt(SQC);
-        soundAnswered = savedInstanceState.getBoolean(SA);
+        soundCategoryClosed = savedInstanceState.getBoolean(SA);
+        userHighScore = savedInstanceState.getInt(UHS);
 
         // display data again
         refresh();
@@ -92,9 +87,10 @@ public class MainActivity extends AppCompatActivity {
         editor.putInt("imageQuestionsScore", imageQuestionsScore);
         editor.putInt("textQuestionsScore", textQuestionsScore);
         editor.putInt("soundQuestionsScore", soundQuestionsScore);
-        editor.putBoolean("imageAnswered", imageAnswered);
-        editor.putBoolean("textAnswered", textAnswered);
-        editor.putBoolean("soundAnswered", soundAnswered);
+        editor.putInt("userHighScore", userHighScore);
+        editor.putBoolean("imageCategoryClosed", imageCategoryClosed);
+        editor.putBoolean("textCategoryClosed", textCategoryClosed);
+        editor.putBoolean("soundCategoryClosed", soundCategoryClosed);
         editor.putString("userName", userName);
         editor.apply();
     }
@@ -104,11 +100,11 @@ public class MainActivity extends AppCompatActivity {
         imageQuestionsScore = sharedPref.getInt("imageQuestionsScore", 0);
         textQuestionsScore = sharedPref.getInt("textQuestionsScore", 0);
         soundQuestionsScore = sharedPref.getInt("soundQuestionsScore", 0);
-        imageAnswered = sharedPref.getBoolean("imageAnswered", false);
-        textAnswered = sharedPref.getBoolean("textAnswered", false);
-        soundAnswered = sharedPref.getBoolean("soundAnswered", false);
+        userHighScore = sharedPref.getInt("userHighScore", 0);
+        imageCategoryClosed = sharedPref.getBoolean("imageCategoryClosed", false);
+        textCategoryClosed = sharedPref.getBoolean("textCategoryClosed", false);
+        soundCategoryClosed = sharedPref.getBoolean("soundCategoryClosed", false);
         userName = sharedPref.getString("userName", getString(R.string.default_user_name));
-        userTotalScore = imageQuestionsScore + textQuestionsScore + soundQuestionsScore;
     }
 
     //refresh all activity changing values
@@ -123,7 +119,10 @@ public class MainActivity extends AppCompatActivity {
         soundScoreTV.setText(String.valueOf(soundQuestionsScore));
 
         TextView totalScoreTV = (TextView) findViewById(R.id.total_score_counter);
-        totalScoreTV.setText(String.valueOf(userTotalScore));
+        totalScoreTV.setText(String.valueOf(userTotalScore()));
+
+        TextView highScoreTV = (TextView) findViewById(R.id.high_score_counter);
+        highScoreTV.setText(String.valueOf(userHighScore));
 
         if (!userName.equals("your_name")) {
             TextView userNameTextView = (TextView) findViewById(R.id.user_name);
@@ -134,51 +133,68 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    public void clearQuiz() {
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.clear();
+        editor.apply();
+        loadSharedPref();
+        refresh();
+    }
+
     public void onBackPressed() {        // to prevent irritating accidental logouts
         long t = System.currentTimeMillis();
         if (t - backPressedTime > 2000) {    // 2 secs
             backPressedTime = t;
-            Toast.makeText(this, "Press back again to exit",
-                    Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Press back again to exit",Toast.LENGTH_SHORT).show();
         } else {    // this guy is serious
             // clean up
             super.onBackPressed();       // bye
         }
     }
 
+    public void checkHighScore_ReNewQuiz() {
+        if (userHighScore < userTotalScore()) {
+            userHighScore = userTotalScore();
+            //new high score message
+            Toast.makeText(MainActivity.this, "Congrats to new high score " + userName, Toast.LENGTH_LONG).show(); //Todo sound> highscore
+        } else {
+            Toast.makeText(MainActivity.this, "Not bad - you have" + String.valueOf(userTotalScore()) + " points, but try again. " + userName, Toast.LENGTH_LONG).show(); //Todo sound> Not bad, but try again
+        }
+        //renew quiz but high score stays
+        int saveUserHighScore = userHighScore;
+        clearQuiz();
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putInt("userHighScore", saveUserHighScore);
+        editor.apply();
+        userHighScore = saveUserHighScore;
+    }
+
+    //when come back from intent
     @Override
     protected void onResume() {
         super.onResume();
         loadSharedPref();
+        //if quiz is finished = all categories are answered > check the highscore and renew quiz
+        if (endQuizCheck()) checkHighScore_ReNewQuiz();
         refresh();
     }
-
-    //help debug tool
-    public void msg(String message) {
-        Toast.makeText(MainActivity.this, message, Toast.LENGTH_SHORT).show();
+    //if all categories are answered - quiz end comes = returns true
+    private boolean endQuizCheck() {
+        return imageCategoryClosed & textCategoryClosed & soundCategoryClosed;
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         // Set the content of the activity to use the activity_main.xml layout file
         setContentView(R.layout.activity_main);
-
         //set SharedPreferences nad if it is first time then set default values
         sharedPref = getSharedPreferences("com.example.ivos.quiz_app.pref1", MODE_PRIVATE);
-        if (savedInstanceState == null) {
-                SharedPreferences.Editor editor = sharedPref.edit();
-                editor.clear();
-                editor.apply();
-                loadSharedPref();
-                refresh();
-        }
+        if (savedInstanceState == null)  clearQuiz();
 
         // change the hint Text in EditText View OnFocus and back
         userNameTextView = (TextView) findViewById(R.id.user_name);
         if (!userName.equals("your_name")) userNameTextView.setText(userName);
-
         userNameTextView.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
@@ -189,7 +205,6 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
-
         // user's total score line handling after userName change
         userNameTextView.addTextChangedListener(new TextWatcher() {
             @Override
@@ -201,19 +216,16 @@ public class MainActivity extends AppCompatActivity {
                 userNameTextView.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.primary_dark_color));
                 userNameTextView.setCursorVisible(false);
             }
-
             @Override
             public void beforeTextChanged(CharSequence s, int start,
                                           int count, int after) {
                 userNameTextView.setCursorVisible(true);
             }
-
             @Override
             public void onTextChanged(CharSequence s, int start,
                                       int before, int count) {
             }
         });
-
         // Find the View that shows the images category
         TextView images = (TextView) findViewById(R.id.image_question_textbuton);
 
@@ -223,17 +235,15 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 // Create a new intent to open the {@link ImagesActivity}
-                if (!imageAnswered) {
-                    //save score before start intent by Shared Preferences
+                if (!imageCategoryClosed) {
+                    //save variables before start intent by Shared Preferences
                     saveSharedPref();
                     Intent imagesIntent = new Intent(MainActivity.this, ImagesActivity.class);
-                    /*imagesIntent.putExtra("textQuestionsScore", String.valueOf(textQuestionsScore));*/
                     // Start the new activity
                     startActivity(imagesIntent);
                 }
             }
         });
-
         // Find the View that shows the colors category
         TextView texts = (TextView) findViewById(R.id.text_question_textbuton);
 
@@ -243,31 +253,27 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 // Create a new intent to open the {@link TextsActivity}
-                if (!textAnswered) {
-                    //save score before start intent by Shared Preferences
+                if (!textCategoryClosed) {
+                    //save variables before start intent by Shared Preferences
                     saveSharedPref();
                     Intent textsIntent = new Intent(MainActivity.this, TextsActivity.class);
-                    /*textsIntent.putExtra("textQuestionsScore", String.valueOf(textQuestionsScore));
                     // Start the new activity*/
                     startActivity(textsIntent);
                 }
             }
         });
-
         // Find the View that shows the sounds category
         TextView sound = (TextView) findViewById(R.id.sound_question_textbuton);
-
         // Set a click listener on that View
         sound.setOnClickListener(new View.OnClickListener() {
             // The code in this method will be executed when the phrases category is clicked on.
             @Override
             public void onClick(View view) {
                 // Create a new intent to open the {@link SoundsActivity}
-                if (!soundAnswered) {
-                    //save score before start intent by Shared Preferences
+                if (!soundCategoryClosed) {
+                    //save variables before start intent by Shared Preferences
                     saveSharedPref();
                     Intent soundsIntent = new Intent(MainActivity.this, SoundsActivity.class);
-                   /* soundsIntent.putExtra("soundQuestionsScore", String.valueOf(soundQuestionsScore));*/
                     // Start the new activity
                     startActivity(soundsIntent);
                 }

@@ -91,15 +91,50 @@
         style="@style/CategoryStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginLeft="32dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/High_score"
+        android:textColor="@color/MainButtonsText"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/sound_question_textbuton"
+        app:layout_constraintVertical_bias="0.778" />
+
+    <TextView
+        android:id="@+id/textView"
+        style="@style/CategoryStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
         android:layout_marginLeft="24dp"
         android:layout_marginStart="24dp"
         android:layout_marginTop="8dp"
         android:text="@string/Total_score"
         android:textColor="@color/MainButtonsText"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/sound_question_textbuton"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginBottom="8dp" />
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/sound_question_textbuton" />
+
+    <TextView
+        android:id="@+id/high_score_counter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="8dp"
+        android:gravity="center_horizontal"
+        android:text="@string/init_zero"
+        android:textColor="@color/MainButtonsText"
+        app:layout_constraintBottom_toBottomOf="@+id/total_score"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/total_score"
+        app:layout_constraintVertical_bias="0.6"
+        android:layout_marginLeft="8dp"
+        app:layout_constraintHorizontal_bias="0.75"
+        app:layout_constraintLeft_toLeftOf="parent" />
 
     <TextView
         android:id="@+id/image_score_counter"
@@ -110,16 +145,15 @@
         android:layout_marginRight="8dp"
         android:layout_marginTop="8dp"
         android:gravity="center_horizontal"
-        android:text="0"
+        android:text="@string/init_zero"
         android:textColor="@color/MainButtonsText"
         app:layout_constraintBottom_toBottomOf="@+id/image_question_textbuton"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="@+id/image_question_textbuton"
-        app:layout_constraintVertical_bias="0.476"
+        app:layout_constraintVertical_bias="0.4"
         android:layout_marginLeft="8dp"
-        app:layout_constraintHorizontal_bias="0.73"
-        app:layout_constraintLeft_toLeftOf="@+id/image_question_textbuton"
-        android:layout_marginStart="8dp" />
+        app:layout_constraintHorizontal_bias="0.75"
+        app:layout_constraintLeft_toLeftOf="parent" />
 
         <TextView
             android:id="@+id/image_score_text"
@@ -127,7 +161,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="7dp"
             android:gravity="center_horizontal"
-            android:text="Score"
+            android:text="@string/score"
             android:textColor="@color/MainButtonsText"
             app:layout_constraintBottom_toTopOf="@+id/image_question_textbuton"
             app:layout_constraintRight_toRightOf="@+id/image_score_counter"
@@ -142,16 +176,15 @@
         android:layout_marginRight="8dp"
         android:layout_marginTop="8dp"
         android:gravity="center_horizontal"
-        android:text="0"
+        android:text="@string/init_zero"
         android:textColor="@color/MainButtonsText"
         app:layout_constraintBottom_toBottomOf="@+id/text_question_textbuton"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="@+id/text_question_textbuton"
-        app:layout_constraintVertical_bias="0.523"
+        app:layout_constraintVertical_bias="0.6"
         android:layout_marginLeft="8dp"
-        app:layout_constraintLeft_toLeftOf="@+id/text_question_textbuton"
-        app:layout_constraintHorizontal_bias="0.727"
-        android:layout_marginStart="8dp" />
+        app:layout_constraintHorizontal_bias="0.75"
+        app:layout_constraintLeft_toLeftOf="parent" />
 
     <TextView
         android:id="@+id/sound_score_counter"
@@ -162,16 +195,15 @@
         android:layout_marginRight="8dp"
         android:layout_marginTop="8dp"
         android:gravity="center_horizontal"
-        android:text="0"
+        android:text="@string/init_zero"
         android:textColor="@color/MainButtonsText"
         app:layout_constraintBottom_toBottomOf="@+id/sound_question_textbuton"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="@+id/sound_question_textbuton"
-        app:layout_constraintVertical_bias="0.523"
+        app:layout_constraintVertical_bias="0.6"
         android:layout_marginLeft="8dp"
-        app:layout_constraintLeft_toLeftOf="@+id/sound_question_textbuton"
-        app:layout_constraintHorizontal_bias="0.73"
-        android:layout_marginStart="8dp" />
+        app:layout_constraintHorizontal_bias="0.75"
+        app:layout_constraintLeft_toLeftOf="parent" />
 
     <TextView
         android:id="@+id/total_score_counter"
@@ -182,15 +214,14 @@
         android:layout_marginRight="8dp"
         android:layout_marginTop="8dp"
         android:gravity="center_horizontal"
-        android:text="0"
+        android:text="@string/init_zero"
         android:textColor="@color/MainButtonsText"
-        app:layout_constraintBottom_toBottomOf="@+id/total_score"
+        app:layout_constraintBottom_toBottomOf="@+id/textView"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/total_score"
+        app:layout_constraintTop_toTopOf="@+id/textView"
+        app:layout_constraintVertical_bias="0.4"
         android:layout_marginLeft="8dp"
-        app:layout_constraintVertical_bias="0.476"
-        app:layout_constraintLeft_toLeftOf="@+id/total_score"
-        app:layout_constraintHorizontal_bias="0.724"
-        android:layout_marginStart="8dp" />
+        app:layout_constraintHorizontal_bias="0.75"
+        app:layout_constraintLeft_toLeftOf="parent" />
 
 </android.support.constraint.ConstraintLayout>

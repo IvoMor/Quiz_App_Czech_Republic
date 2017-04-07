@@ -14,20 +14,25 @@
     <!-- Total_score text  -->
     <string name="Total_score">Total score:</string>
 
+    <!-- High_score text  -->
+    <string name="High_score">High score:</string>
+
     <!-- slected language  -->
     <string name="cz_en">CZ(en)</string>
 
     <!-- slected language  -->
     <string name="en_cz">EN(cz)</string>
 
-
     <string name="nothing">Nothing_else</string>
 
     <!-- name enter hint  -->
     <string name="name_request">Your_name_here</string>
 
-    <!--submit_answer_button_text-->
-    <string name="submit_answer_button_text">Submit answer (definitely)</string>
+    <!--submit_answer_button_text for image and text question-->
+    <string name="submit_answer_button_text">Hint: Choose your answer than touch whatever for submit. (Don\'t have another chance)</string>
+
+    <!--submit_answer_button_text for sound question-->
+    <string name="submit_answer_button_text_sound">Hint: Touch whatever for play sound. Choose your answer than touch whatever for submit. (Don\'t have another chance)</string>
 
     <!--defaultUserName-->
     <string name="default_user_name">your_name</string>
@@ -37,4 +42,6 @@
 
     <!--sendFrom-->
     <string name="sendFrom">sendFrom</string>
+    <string name="init_zero">0</string>
+    <string name="score">Score</string>
 </resources>

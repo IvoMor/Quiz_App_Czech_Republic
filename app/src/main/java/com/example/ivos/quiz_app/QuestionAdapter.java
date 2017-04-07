@@ -32,6 +32,7 @@ public class QuestionAdapter extends ArrayAdapter<Question> {
         super(context, 0, questions);
     }
 
+
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         // Check if an existing view is being reused, otherwise inflate the view
@@ -65,28 +66,30 @@ public class QuestionAdapter extends ArrayAdapter<Question> {
         answerCtextView.setText(currentQuestion.getAnswerText3());
 
         // Find the ImageView in the list_item.xml layout with the ID image.
-        ImageView imageView = (ImageView) listItemView.findViewById(R.id.image);
+        ImageView imageHint = (ImageView) listItemView.findViewById(R.id.image);
+        ImageView playButton = (ImageView) listItemView.findViewById(R.id.image2);
+
         // Check if an image is provided for this word or not
         if (currentQuestion.hasImage()) {
             // If an image is available, display the provided image based on the resource ID
-            imageView.setImageResource(currentQuestion.getImageResourceId());
+            imageHint.setImageResource(currentQuestion.getImageResourceId());
             // Make sure the view is visible
-            imageView.setVisibility(View.VISIBLE);
+            imageHint.setVisibility(View.VISIBLE);
+            playButton.setVisibility(View.GONE);
         } else {
             if (currentQuestion.getIsText()) {
                 // Otherwise hide the ImageView (set visibility to GONE)
-                imageView.setVisibility(View.GONE);
+                imageHint.setVisibility(View.GONE);
+                playButton.setVisibility(View.GONE);
             } else {
-                imageView.setVisibility(View.GONE);
-                ImageView imageView2 = (ImageView) listItemView.findViewById(R.id.image2);
-                imageView2.setImageResource(R.drawable.play_button);
-                imageView2.setVisibility(View.VISIBLE);
+                imageHint.setVisibility(View.GONE);
+                playButton.setVisibility(View.VISIBLE);
+                TextView hintChangeForSound = (TextView) listItemView.findViewById(R.id.submit_button);
+                hintChangeForSound.setText(R.string.submit_answer_button_text_sound);
             }
         }
 
-        // Set the theme color for the list item
         View textContainer = listItemView.findViewById(R.id.container);
-
         // Set the background color of the text container View
         textContainer.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.tan_background));
 
@@ -94,6 +97,4 @@ public class QuestionAdapter extends ArrayAdapter<Question> {
         // the ListView.
         return listItemView;
     }
-
-
 }

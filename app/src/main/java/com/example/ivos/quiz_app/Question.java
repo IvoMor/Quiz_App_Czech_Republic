@@ -122,7 +122,7 @@ public class Question {
 
 
     /** Image resource ID for the question */
-    public boolean getIsText() {return qIsText;}
+    public boolean getIsText() {return qIsText;};
 
     /**
      * Returns whether or not there is an image for this question.

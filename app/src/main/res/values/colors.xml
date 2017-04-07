@@ -15,7 +15,6 @@
     <!-- Background color for the numbers category -->
     <color name="category">#c0c0c0</color>
 
-
     <!-- Question text color -->
     <color name="question_texts">#404040</color>
 
