@@ -11,7 +11,6 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
-
 public class MainActivity extends AppCompatActivity {
 
     //initialization
@@ -158,10 +157,10 @@ public class MainActivity extends AppCompatActivity {
             //new high score message
             Toast.makeText(MainActivity.this, "Congrats " + userName + ". It's a new high score." , Toast.LENGTH_LONG).show();
         } else {
-            Toast.makeText(MainActivity.this, "Not bad " + userName + ". You have" + String.valueOf(userTotalScore()) + " points.", Toast.LENGTH_LONG).show();
+            Toast.makeText(MainActivity.this, "Not bad " + userName + ". You've got " + String.valueOf(userTotalScore()) + " points.", Toast.LENGTH_LONG).show();
         }
         //renew quiz but high score and user stay
-        Toast.makeText(MainActivity.this, "So " + userName + " try again?" , Toast.LENGTH_LONG).show();
+        Toast.makeText(MainActivity.this, "So " + userName + " next try?" , Toast.LENGTH_LONG).show();
         int saveUserHighScore = userHighScore;
         String saveUserName = userName;
         clearQuiz();

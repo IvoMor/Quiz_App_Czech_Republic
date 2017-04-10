@@ -18,7 +18,6 @@ import android.widget.Toast;
 import java.util.ArrayList;
 
 public class ImagesActivity extends AppCompatActivity {
-
     // Handles playback of all the sound files */
     private MediaPlayer mMediaPlayer;
     // imageQuestionScore counter */
