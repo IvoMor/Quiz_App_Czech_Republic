@@ -8,10 +8,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -117,7 +117,7 @@ public class TextsActivity extends AppCompatActivity {
                         checkButtonPosition = 3;
                         break;
                 }
-                RelativeLayout container_list_item = (RelativeLayout) view.findViewById(R.id.container);
+                LinearLayout container_list_item = (LinearLayout) view.findViewById(R.id.container);
                 //if it is the right answer then colored text and background to blue else to red
                 if (checkButtonPosition == question.getqRightAnswerPosition()) {
                     // Create and setup the {@link MediaPlayer} for the audio resource associated

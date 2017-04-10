@@ -30,7 +30,7 @@
     <string name="init_zero">0</string>
 
     <!-- name enter hint  -->
-    <string name="name_request">type your name now</string>
+    <string name="name_request">type your name</string>
 
     <!--submit_answer_button_text for image and text question-->
     <string name="submit_answer_button_text">Hint: Choose your answer than touch whatever for submit. (One try only.)</string>
@@ -50,9 +50,14 @@
     <!--score text-->
     <string name="score">Score</string>
 
+    <!--score text-->
+    <string name="categories">Categories</string>
+
     <!--Main_background_image_Czech_Flag contain description-->
     <string name="Main_background_image_Czech_Flag">Main_background_image_Czech_Flag</string>
 
     <!--Toast message text-->
     <string name="Press_back_again_to_exit">Press back again to exit</string>
+    <string name="Question_Hint_image">Question_Hint_image</string>
+    <string name="Sound_hint_image">Sound_hint_image</string>
 </resources>
