@@ -83,7 +83,7 @@ public class ImagesActivity extends AppCompatActivity {
         QuestionAdapter adapter = new QuestionAdapter(this, questions);
         // Find the {@link ListView} object in the view hierarchy of the {@link Activity}.
         // There should be a {@link ListView} with the view ID called list, which is declared in the
-        // question_listlist.xml layout file.
+        // question_list.xml layout file.
         ListView listView = (ListView) findViewById(R.id.list);
         // Make the {@link ListView} use the {@link QuestionAdapter} we created above, so that the
         // {@link ListView} will display list items for each {@link Question} in the list.

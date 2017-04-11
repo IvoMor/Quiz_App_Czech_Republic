@@ -227,7 +227,7 @@
         app:layout_constraintLeft_toLeftOf="@+id/text_score_counter"
         app:layout_constraintRight_toRightOf="@+id/text_score_counter"
         app:layout_constraintTop_toTopOf="@+id/sound_question_textbuton"
-        app:layout_constraintVertical_bias="1.0"
+        app:layout_constraintVertical_bias="0.5"
         tools:layout_constraintTop_creator="1"
         tools:layout_constraintBottom_creator="1"
         android:layout_marginStart="8dp" />
